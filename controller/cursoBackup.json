@@ -1,0 +1,15 @@
+{
+	"curso":
+	[
+		{
+			"codigo":1,
+			"sigla":"SI",
+			"nome":"Sistema de Informação"
+		},
+		{
+			"codigo":2,
+			"sigla":"ADS",
+			"nome":"Analise e Desenvolvimento de Sistemas"
+		}
+	]
+}

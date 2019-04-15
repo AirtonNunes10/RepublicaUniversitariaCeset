@@ -1,0 +1,31 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.center-title {
+  width: 27%;
+  margin:0 auto;			
+ }
+
+.center-from {
+  width: 60%;
+  margin:0 auto;			
+ }
+
+  .center-conectado {
+  width: 90%;
+  margin:0 auto;			
+ }
+ 
+ .center-button {
+  width: 85%;
+  margin:0 auto;			
+ }
+
+.borda {
+    border-top: 1px solid #000;
+}
