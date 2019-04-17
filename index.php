@@ -42,7 +42,7 @@
           			<div class="container">
             			<div class="col-lg-5"></div>
             			<ul class="nav navbar-nav">
-              				<li><a class="navbar-brand" href="paginaLogin.php">Login</a></li>
+              				<li><a class="navbar-brand" href="login.php">Login</a></li>
             			</ul>
         			</div>
         		</div>

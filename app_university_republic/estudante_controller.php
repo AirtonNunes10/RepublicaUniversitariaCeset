@@ -44,6 +44,6 @@
 	print_r($funcionarioService);
 	echo '</pre>';
 	*/
-	header('Location: paginaEstudante.php?inclusao=1');
+	header('Location: usuario.php?inclusao=1');
 
 ?>

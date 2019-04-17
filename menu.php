@@ -15,9 +15,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sistema <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="paginaEstudante.php">Estudante</a></li>
+            <li><a href="usuario.php">Usuário</a></li>
             <li><a href="paginaFuncionario.php">Funcionario</a></li>
-            <li><a href="paginaCurso.php">Curso</a></li>
+            <li><a href="curso.php">Curso</a></li>
             <li><a href="paginaEnviarMenssagem.php">Enviar mensagem</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Gerar relatórios</li>
@@ -25,7 +25,7 @@
             <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
-        <li><a href="paginaLogin.php">Sair</a></li>
+        <li><a href="login.php">Sair</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

@@ -1,5 +1,5 @@
 <?php 
-
+	header('Content-Type: text/html; charset=utf-8');
 	class EstudanteService {
 
 		private $conexao;
@@ -53,7 +53,7 @@
 				
 			));
 
-			$id_estudante = 'select id_estudante from tb_estudante where cpf = '. $this->estudante->__get('cpf');
+			$id_estudante = 'select id_estudante from tb_estudante where cpf = "'. $this->estudante->__get('cpf') . '"';
 
 			$resultado = $this->conexao->query($id_estudante);
 			$idEstudante = $resultado->fetch(PDO::FETCH_OBJ);

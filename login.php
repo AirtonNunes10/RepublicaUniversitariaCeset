@@ -1,5 +1,5 @@
 <html>
-  <head>
+  <head lang="en" ng-app>
     <meta charset="utf-8" />
     <link rel="icon" href="img/cesertLogo.jpg">
     <title>Cesert</title>
