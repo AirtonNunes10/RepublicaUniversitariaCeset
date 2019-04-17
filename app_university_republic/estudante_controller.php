@@ -1,8 +1,8 @@
 <?php 
 
-	require "app__university_republic/estudante.model.php";
-	require "app__university_republic/estudante.service.php";
-	require "app__university_republic/conexao.php";
+	require "app_university_republic/estudante.model.php";
+	require "app_university_republic/estudante.service.php";
+	require "app_university_republic/conexao.php";
 
 	$estudante = new Estudante('cpf', 'nome', 'rg', 'dataNascimento', 'sexo', 'estadoCivil', 'tipoUsuario', 'email', 'senha', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'uf', 'complemento', 'dddCelular1', 'telefoneCelular1', 'dddCelular2', 'telefoneCelular2', 'dddResidencial', 'telefoneResidencial');
 	$estudante->__set('cpf', $_POST['cpf']);

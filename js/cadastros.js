@@ -1,5 +1,7 @@
-$( document ).ready( function(){
-    $('#cpf').mask('000.000.000-00', {reverse: true});
+$(document).ready(function () {
+    $("#areaEstudante").hide();
+    $("#areaFuncionario").hide();
+    $('#cpf').mask('000.000.000-00', { reverse: true });
     $('#rg').mask('0.000.000');
     $('#cep').mask('00000-000');
     $('#numero').mask('0000');
@@ -12,6 +14,27 @@ $( document ).ready( function(){
     $('#telefoneResidencial').mask('0000-0000');
 });
 
-function changeType(){
-     console.log($("#tipoUsuario").val());
+function changeType() {
+    var type = $("#tipoUsuario option:selected").val();
+    console.log(type);
+    if (type === "admin") {
+        $("#areaEstudante").show();
+        $("#areaFuncionario").hide();
+    }
+    else if (type === "estud") {
+        $("#areaEstudante").show();
+        $("#areaFuncionario").hide();
+    }
+    else if (type === "tesou") {
+        $("#areaEstudante").show();
+        $("#areaFuncionario").hide();
+    }
+    else if (type === "func") {
+        $("#areaEstudante").hide();
+        $("#areaFuncionario").show();
+    }
+    else {
+        $("#areaEstudante").hide();
+        $("#areaFuncionario").hide();
+    }
 }

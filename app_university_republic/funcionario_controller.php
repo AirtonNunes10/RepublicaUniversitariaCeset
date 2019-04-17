@@ -1,8 +1,8 @@
 <?php 
 
-	require "../../app__university_republic/funcionario.model.php";
-	require "../../app__university_republic/funcionario.service.php";
-	require "../../app__university_republic/conexao.php";
+	require "../../app_university_republic/funcionario.model.php";
+	require "../../app_university_republic/funcionario.service.php";
+	require "../../app_university_republic/conexao.php";
 
 	$funcionario = new funcionario('cpf', 'nome', 'rg', 'dataNascimento', 'sexo', 'estadoCivil', 'tipoUsuario', 'email', 'senha', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'uf', 'complemento', 'dddCelular1', 'telefoneCelular1', 'dddCelular2', 'telefoneCelular2', 'dddResidencial', 'telefoneResidencial');
 	$funcionario->__set('cpf', $_POST['cpf']);
