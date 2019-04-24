@@ -13,6 +13,7 @@
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>
 	<script src="js/cadastros.js"></script>
+	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
 	<title>Cesert</title>
 
@@ -25,6 +26,7 @@
 
 	<!-- Estilos personalizados para este modelo -->
 	<link href="css/starter-template.css" rel="stylesheet">
+	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
 
 </head>
 
@@ -37,17 +39,17 @@
 	<br>
 
 	<?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == 1) { ?>
-	<div class="alert alert-success" role="alert">
-		<h3 align="center" size="100">Cadastro realizado com sucesso!<h3>
+	<div class="alert alert-success" role="alert" style="text-align: center;">
+		<h3 size="100">Cadastro realizado com sucesso!<h3>
 	</div>
 	<?php } ?>
 
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#cadastrarUsuario" aria-controls="cadastrarUsuario"
+			<li role="presentation" class="active" id="tabCadastrarUsuario"><a href="#cadastrarUsuario" aria-controls="cadastrarUsuario"
 					role="tab" data-toggle="tab">Cadastrar usuários</a></li>
-			<li role="presentation"><a href="#consultarUsuario" aria-controls="consultarUsuario" role="tab"
+			<li role="presentation" id="tabConsultarUsuario"><a href="#consultarUsuario" aria-controls="consultarUsuario" role="tab"
 					data-toggle="tab">Consultar usuários</a></li>
 		</ul>
 		<!-- Tab panes -->
@@ -313,18 +315,42 @@
 
 			<div role="tabpanel" class="tab-pane" id="consultarUsuario">
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#consultarEstudante" aria-controls="consultarEstudante"
+					<li role="presentation" class="active" id="tabConsultarEstudante"><a href="#consultarEstudante" aria-controls="consultarEstudante"
 							role="tab" data-toggle="tab">Estudantes</a></li>
-					<li role="presentation"><a href="#consultarFuncionario" aria-controls="consultarFuncionario" role="tab"
+					<li role="presentation" id="tabConsultarFuncionario"><a href="#consultarFuncionario" aria-controls="consultarFuncionario" role="tab"
 							data-toggle="tab">Funcionários</a></li>
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="consultarEstudante">
-						Estudante
+						<table cellpadding='1' cellspacing='1' id='tabelaConsultarEstudante' class="table table-striped table-bordered" width='100%'>
+							<thead>
+								<tr>
+									<th>CPF</th>
+									<th>Nome</th>
+									<th>Email</th>
+									<th>Instituição</th>
+									<th>Curso</th>
+									<th>Perído Atual</th>
+									<th>Dada Inicio Curso</th>
+									<th>Dada Final Curso</th>
+								</tr>
+							</thead>
+						</table>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="consultarFuncionario">
-						Funcionario
+						<table cellpadding='1' cellspacing='1' id='tabelaConsultarFuncionario' class="table table-striped table-bordered" width='100%'>
+							<thead>
+								<tr>
+									<th>CPF</th>
+									<th>Nome</th>
+									<th>Email</th>
+									<th>Departamento</th>
+									<th>Profissão</th>
+									<th>Data Cadastro</th>
+								</tr>
+							</thead>
+						</table>
 					</div>
 				</div>
 			</div>
