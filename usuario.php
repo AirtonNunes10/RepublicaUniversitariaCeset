@@ -12,8 +12,15 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>
-	<script src="js/cadastros.js"></script>
+	<script src="js/cadastros_usuarios.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
 
 	<title>Cesert</title>
 
@@ -59,6 +66,9 @@
 				<form class="center-from" method="post" action="estudante_controller.php">
 				<h5 class="featurette-heading"><span class="text-muted">Dados pessoais</span></h5>
 				<div class="row col-md-12">
+
+					<input hidden id="action" name="action" value="none">
+				
 					<div class="form-group col-sm-4">
 						<label for="cpf">CPF</label>
 						<input name="cpf" type="text" required ng-model="cpf" class="form-control" id="cpf"
@@ -189,7 +199,6 @@
 							placeholder="Complemento">
 					</div>
 				</div>
-
 
 				<!-- TELEFONES -->
 
@@ -332,8 +341,8 @@
 									<th>Instituição</th>
 									<th>Curso</th>
 									<th>Perído Atual</th>
-									<th>Dada Inicio Curso</th>
-									<th>Dada Final Curso</th>
+									<th>Data Inicio Curso</th>
+									<th>Data Final Curso</th>
 								</tr>
 							</thead>
 						</table>

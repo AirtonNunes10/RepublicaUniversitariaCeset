@@ -11,7 +11,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.mask.js"></script>
     <script src="js/angular.min.js"></script>
-    <script src="js/cadastros.js"></script>
+    <script src="js/cadastros_usuarios.js"></script>
 
     <title>Cesert</title>
 

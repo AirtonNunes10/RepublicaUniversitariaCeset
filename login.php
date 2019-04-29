@@ -17,7 +17,7 @@
 
   <body>
 
-    <nav class="navbar navbar-dark bg-dark" blackgraund="black">
+    <nav class="navbar navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
         <img src="img/cesertLogo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
         Casa de Estudante de Sertânia
@@ -49,5 +49,9 @@
           </div>
         </div>
       </div>
+    <br><br><br><br><br><br>
+    <footer align="center">
+      <p>&copy; 2019 Casa do estudante de Sertânia - Cesert &middot; <a href="#">Termo</a></p>
+    </footer>
   </body>
 </html>

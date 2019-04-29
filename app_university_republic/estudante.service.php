@@ -16,9 +16,9 @@
 
 			$stmt = $this->conexao->prepare($query);
 
-			$stmt->bindValue(':cpf', $this->estudante->__get('cpf'));
+			$stmt->bindValue(':cpf', preg_replace('~\D~', '', $this->estudante->__get('cpf')));
 			$stmt->bindValue(':nome', $this->estudante->__get('nome'));
-			$stmt->bindValue(':rg', $this->estudante->__get('rg'));
+			$stmt->bindValue(':rg', preg_replace('~\D~', '', $this->estudante->__get('rg')));
 			$stmt->bindValue(':dataNascimento', $this->estudante->__get('dataNascimento'));
 			$stmt->bindValue(':sexo', $this->estudante->__get('sexo'));
 			$stmt->bindValue(':estadoCivil', $this->estudante->__get('estadoCivil'));
@@ -69,7 +69,7 @@
 
 			$query = $this->conexao->prepare($query);
 
-			$query->bindValue(':cep', $this->estudante->__get('cep'));
+			$query->bindValue(':cep', preg_replace('~\D~', '', $this->estudante->__get('cep')));
 			$query->bindValue(':endereco', $this->estudante->__get('endereco'));
 			$query->bindValue(':numero', $this->estudante->__get('numero'));
 			$query->bindValue(':bairro', $this->estudante->__get('bairro'));
@@ -92,12 +92,12 @@
 
 			$query = $this->conexao->prepare($query);
 
-			$query->bindValue(':dddCelular1', $this->estudante->__get('dddCelular1'));
-			$query->bindValue(':telefoneCelular1', $this->estudante->__get('telefoneCelular1'));
-			$query->bindValue(':dddCelular2', $this->estudante->__get('dddCelular2'));
-			$query->bindValue(':telefoneCelular2', $this->estudante->__get('telefoneCelular2'));
-			$query->bindValue(':dddResidencial', $this->estudante->__get('dddResidencial'));
-			$query->bindValue(':telefoneResidencial', $this->estudante->__get('telefoneResidencial'));
+			$query->bindValue(':dddCelular1', preg_replace('~\D~', '', $this->estudante->__get('dddCelular1')));
+			$query->bindValue(':telefoneCelular1', preg_replace('~\D~', '', $this->estudante->__get('telefoneCelular1')));
+			$query->bindValue(':dddCelular2', preg_replace('~\D~', '', $this->estudante->__get('dddCelular2')));
+			$query->bindValue(':telefoneCelular2', preg_replace('~\D~', '', $this->estudante->__get('telefoneCelular2')));
+			$query->bindValue(':dddResidencial', preg_replace('~\D~', '', $this->estudante->__get('dddResidencial')));
+			$query->bindValue(':telefoneResidencial', preg_replace('~\D~', '', $this->estudante->__get('telefoneResidencial')));
 
 			$query->execute(array(
 				':dddCelular1' => $this->estudante->__get('dddCelular1'),
@@ -111,7 +111,27 @@
 		}
 
 		public function consultarCadastro(){
-
+			$query = "SELECT * FROM tb_estudante";
+			$query = $this->conexao->query($query);
+			$result = $query->fetchAll(PDO::FETCH_OBJ);
+			if($result){
+				$tempArray = [];
+				$data = array();
+				for($i = 0; $i<count($result); $i++){
+					$tempArray[$i][] = $result[$i]->cpf;
+					$tempArray[$i][] = $result[$i]->nome;
+					$tempArray[$i][] = $result[$i]->email;
+					$tempArray[$i][] = $result[$i]->instituicao;
+					$tempArray[$i][] = $result[$i]->curso;
+					$tempArray[$i][] = $result[$i]->periodo;
+					$tempArray[$i][] = $result[$i]->data_inicio_curso;
+					$tempArray[$i][] = $result[$i]->data_final_curso;
+					array_push($data, $tempArray[$i]);
+				}
+				$retorno['data'] = $data;
+				echo json_encode($retorno);
+				return;
+			}
 		}
 
 		public function editarCadastro(){
