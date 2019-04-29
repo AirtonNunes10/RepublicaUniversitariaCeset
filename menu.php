@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="principal.php">Cesert</a>
+        <a class="navbar-brand" href="index.php" title="Site da Cesert" target="_blank">Cesert</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -17,12 +17,12 @@
           <ul class="dropdown-menu">
             <li><a href="usuario.php">Usuário</a></li>
             <li><a href="curso.php">Curso</a></li>
-            <li><a href="curso.php">Curso</a></li>
-            <li><a href="paginaEnviarMenssagem.php">Enviar mensagem</a></li>
+            <li><a href="financas.php">Finanças</a></li>
+            <li><a href="enviarEmail.php">Enviar Email</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Gerar relatórios</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
+            <li class="dropdown-header">Sites Informativos</li>
+            <li><a href="http://www.casadoestudantepe.org.br/" title="Site da Casa do estudante de Pernambuco" target="_blank">CEP</a></li>
+            <li><a href="https://www.sertania.pe.gov.br/" title="Site da prefeitura de Sertânia" target="_blank">Sertânia</a></li>
           </ul>
         </li>
         <li><a href="login.php">Sair</a></li>
