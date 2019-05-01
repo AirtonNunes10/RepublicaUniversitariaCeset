@@ -44,14 +44,23 @@
 	$mail = new PHPMailer(true);
 	try {
 	    //Server settings
+<<<<<<< HEAD
 	    $mail->SMTPDebug = 4;                                 // Enable verbose debug output
+=======
+	    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+>>>>>>> bcaf9313028b07cd58fb5ac4149875979320d54c
 	    $mail->isSMTP();                                      // Set mailer to use SMTP
 	    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
 	    $mail->SMTPAuth = true;                               // Enable SMTP authentication
 	    $mail->Username = 'cesertoficial@gmail.com';                 // SMTP username
 	    $mail->Password = 'cesert2016';                           // SMTP password
+<<<<<<< HEAD
 	    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
 	    $mail->Port = 465;                                    // TCP port to connect to
+=======
+	    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+	    $mail->Port = 587;                                    // TCP port to connect to
+>>>>>>> bcaf9313028b07cd58fb5ac4149875979320d54c
 
 	    //Recipients
 	    $mail->setFrom('cesertoficial@gmail.com', 'Cesert');
@@ -94,7 +103,11 @@
 	<!-- As 3 metatags acima * devem * vir em primeiro lugar na cabeça; qualquer outro conteúdo principal deve vir * depois * dessas tags -->
 	<meta name="description" content="">
 	<meta name="author" content="">
+<<<<<<< HEAD
 	<link rel="icon" href="../img/cesertLogo.jpg">
+=======
+	<link rel="icon" href="img/cesertLogo.jpg">
+>>>>>>> bcaf9313028b07cd58fb5ac4149875979320d54c
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>

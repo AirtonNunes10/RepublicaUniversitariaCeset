@@ -18,7 +18,11 @@
             <li><a href="usuario.php">Usuário</a></li>
             <li><a href="curso.php">Curso</a></li>
             <li><a href="financas.php">Finanças</a></li>
+<<<<<<< HEAD
             <li><a href="enviarEmail.php">Enviar email</a></li>
+=======
+            <li><a href="enviarEmail.php">Enviar Email</a></li>
+>>>>>>> bcaf9313028b07cd58fb5ac4149875979320d54c
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Sites Informativos</li>
             <li><a href="http://www.casadoestudantepe.org.br/" title="Site da Casa do estudante de Pernambuco" target="_blank">CEP</a></li>
