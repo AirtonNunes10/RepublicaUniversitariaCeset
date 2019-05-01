@@ -12,11 +12,7 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>
-<<<<<<< HEAD
 	<script src="js/cadastros_cursos.js"></script>
-=======
-	<script src="js/cadastros.js"></script>
->>>>>>> bcaf9313028b07cd58fb5ac4149875979320d54c
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
 	<title>Cesert</title>
@@ -61,7 +57,6 @@
 			<!-- DADOS DO CURSO -->
 			<div role="tabpanel" class="tab-pane active" id="cadastrarCurso">
 				<form class="center-from" method="post" action="curso_controller.php">
-<<<<<<< HEAD
 					<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
 					<div class="row col-md-12">
 
@@ -92,35 +87,6 @@
 						</div>
 						<br>
 					</div>
-=======
-				<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
-				<div class="row col-md-12">
-					<div class="form-group col-sm-4">
-						<label for="codigo">Código</label>
-						<input name="codigo" type="numeric" readonly ng-model="codigo" class="form-control" id="codigo" placeholder="0000">
-					</div>
-					<div class="form-group col-sm-4">
-						<label for="sigla">Sigla do curso</label>
-						<input name="sigla" type="text" required ng-model="sigla" class="form-control" id="sigla"
-							placeholder="SI">
-					</div>
-					<div class="form-group col-sm-4">
-						<label for="curso">Nome do Curso</label>
-						<input name="curso" type="text" required ng-model="curso" class="form-control" id="curso"
-							placeholder="Sistemas de Informação">
-					</div>
-				</div>
-
-				<div class="row col-md-12">
-					<div class="borda"></div>
-					<br>
-					<div class="center-button" style="text-align: center;">
-						<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-						<button ng-disabled="!curso" type="submit" class="btn btn-primary">Salvar</button>
-					</div>
-					<br>
-				</div>
->>>>>>> bcaf9313028b07cd58fb5ac4149875979320d54c
 				</form>
 			</div>
 
