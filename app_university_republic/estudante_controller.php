@@ -52,7 +52,6 @@ if ($action === "cadastrarEstudante") {
     $conexao = new Conexao();
     $estudante = new Estudante('cpf', 'nome', 'rg', 'dataNascimento', 'sexo', 'estadoCivil', 'tipoUsuario', 'email', 'senha', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'uf', 'complemento', 'dddCelular1', 'telefoneCelular1', 'dddCelular2', 'telefoneCelular2', 'dddResidencial', 'telefoneResidencial');
     
-
     $estudanteService = new EstudanteService($conexao, $estudante);
     $estudanteService->consultarCadastro();
 }

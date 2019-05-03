@@ -60,7 +60,7 @@
 					<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
 					<div class="row col-md-12">
 
-						<input hidden id="action" name="action" value="none">
+						<input hidden id="action" name="action" value="cadastrarCurso">
 
 						<div class="form-group col-sm-4">
 							<label for="codigo">Código</label>

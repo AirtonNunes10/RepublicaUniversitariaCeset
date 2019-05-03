@@ -91,9 +91,9 @@
 									<select name="tipoPagamento" id="tipoPagamento" required ng-model="tipoPagamento" class="form-control"
 										>
 										<option></option>
-										<option value="doacao">Doação</option>
-										<option value="mensal">Mensalidade</option>
-										<option value="multa">Multa</option>
+										<option>Doação</option>
+										<option>Mensalidade</option>
+										<option>Multa</option>
 									</select>
 								</div>
 								<div class="form-group col-sm-4">
@@ -103,7 +103,7 @@
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="valorMensalidade">Valor mensalidade</label>
-									<input name="valorMensalidade" type="password" required ng-model="valorMensalidade" class="form-control" id="valorMensalidade"
+									<input name="valorMensalidade" type="numeric" required ng-model="valorMensalidade" class="form-control" id="valorMensalidade"
 										placeholder="00,00">
 								</div>
 							</div>
@@ -169,7 +169,7 @@
 								<div class="form-group col-sm-4">
 									<label for="localCompra">Local compra</label>
 									<input name="localCompra" type="text" required ng-model="localCompra" class="form-control" id="localCompra"
-										placeholder="Atacadão">
+										placeholder="NET">
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="dataCompra">Data compra</label>
@@ -178,7 +178,7 @@
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="valorCompra">Valor compra</label>
-									<input name="valorCompra" type="text" required ng-model="valorCompra" class="form-control" id="valorCompra"
+									<input name="valorCompra" type="numeric" required ng-model="valorCompra" class="form-control" id="valorCompra"
 										placeholder="00,00">
 								</div>
 							</div>
