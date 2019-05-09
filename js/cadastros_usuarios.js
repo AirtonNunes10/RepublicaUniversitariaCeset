@@ -192,3 +192,42 @@ function changeType() {
         $("#areaFuncionario").hide();
     }
 }
+
+function prepareFormDAta($form) {
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function (n, i) {
+        indexed_array[n['name']] = n['value'];
+    });
+
+   return JSON.stringify(indexed_array);
+}
+
+function salvar(){
+    var prepareData = $("#formCadastro");
+    var dadosCadastrais = prepareFormDAta(prepareData);
+
+    console.log(dadosCadastrais);
+    
+    $.ajax({
+        url:'../app_university_republic/estudante_controller.php',
+        type:'POST',
+        data: {
+            action: $("#action").val(),
+            user: dadosCadastrais,
+            key: "segredo"
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if(response.sucesso === 1){
+                alert("aehoo");
+            } else {
+                alert("poxa, deu errado :c");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+}

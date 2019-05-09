@@ -63,7 +63,7 @@
 		<div class="tab-content">
 			<!-- DADOS PESSOAIS -->
 			<div role="tabpanel" class="tab-pane active" id="cadastrarUsuario">
-				<form class="center-from" method="post" action="estudante_controller.php">
+				<form class="center-from" method="post" id="formCadastro"action="estudante_controller.php">
 				<h5 class="featurette-heading"><span class="text-muted">Dados pessoais</span></h5>
 				<div class="row col-md-12">
 
@@ -94,7 +94,7 @@
 						<select name="sexo" required ng-model="sexo" class="form-control">
 							<option></option>
 							<option value="F">Femino</option>
-							<option value="M">Marculino</option>
+							<option value="M">Masculino</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
@@ -315,7 +315,7 @@
 					<br>
 					<div class="center-button" style="text-align: center;">
 						<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-						<button ng-disabled="!cpf" type="submit" class="btn btn-primary">Salvar</button>
+                                                <button ng-disabled="!cpf" type="button" onclick="salvar()" class="btn btn-primary">Salvar</button>
 					</div>
 					<br>
 				</div>

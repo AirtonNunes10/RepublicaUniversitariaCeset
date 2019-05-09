@@ -1,8 +1,6 @@
 <?php 
 
 	require_once "pessoa.model.php";
-	require_once "endereco.model.php";
-	require_once "telefone.model.php";
 	
 	class Estudante extends Pessoa{
 

@@ -11,6 +11,16 @@
 		private $tipoUsuario;
 		private $email;
 		private $senha;
+		private $cep;
+		private $endereco;
+		private $numero;
+		private $bairro;
+		private $cidade;
+		private $uf;
+		private $complemento;
+		private $celular1;
+		private $celular2;
+		
 
 		public function __get($atributo){
 			return $this->$atributo;
@@ -20,21 +30,7 @@
 			$this->$atributo = $valor;
 		}
 
-		public function salvarCadastro(){
-			
-		}
-
-		public function consultarCadastro(){
-
-		}
-
-		public function editarCadastro(){
 		
-		}
-
-		public function excluirCadastro(){
-			
-		}
 
 	}
 
