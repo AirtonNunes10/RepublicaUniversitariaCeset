@@ -3,14 +3,12 @@
 	class EstudanteService {
 
 		private $conexao;
-		private $estudante;
 		
-		public function __construct(Conexao $conexao, Estudante $estudante) {
+		public function __construct(Conexao $conexao) {
 			$this->conexao = $conexao->conectar();
-			$this->estudante = $estudante;
 		}
 
-		public function salvarCadastro(){
+		public function salvarCadastro($estudante){
 			$query = 'insert into tb_estudante(cpf, nome, rg, data_nascimento, sexo, estado_civil, tipo_usuario, email, senha, instituicao, matricula, curso, data_inicio_curso, data_final_curso, periodo, escolaridade)
 				values(:cpf, :nome, :rg, :dataNascimento, :sexo, :estadoCivil, :tipoUsuario, :email, :senha, :instituicao, :matricula, :curso, :dataInicioCurso, :dataFinalCurso, :periodo, :escolaridade)';
 

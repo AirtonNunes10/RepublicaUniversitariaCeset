@@ -5,23 +5,23 @@ $(document).ready(function () {
     $('#rg').mask('0.000.000');
     $('#cep').mask('00000-000');
     $('#numero').mask('0000');
-    $('#dddCelular1').mask('(00)');
-    $('#telefoneCelular1').mask('00000-0000');
-    $('#dddCelular2').mask('(00)');
-    $('#telefoneCelular2').mask('00000-0000');
-    $('#dddResidencial').mask('(00)');
-    $('#periodo').mask('00');
+    $('#celular1').mask('(00)00000-0000');
+    $('#celular2').mask('(00)00000-0000');
     $('#telefoneResidencial').mask('0000-0000');
-
+    $('#periodo').mask('00');
+    
     tabelaEstudantes = $('#tabelaConsultarEstudante').DataTable({
         "responsive": {
             "details": "false"
         },
-        "bAutoWidth": "false",
+        "dom": 'Bfrtip',
+        "buttons": [
+            "excel", "pdf", "print"
+        ],
+        "bAutoWidth": "true",
         "lengthMenu": [[5, 10, 15, 20, 25], [5, 10, 15, 20, 25]],
         "pageLength": 5,
         "order": [[0, "asc"]],
-        "buttons": [["copy", "csv", "excel", "pdf", "print"]],
         "language": {
             "sInfoEmpty": "Nenhum registro encontrado",
             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -58,11 +58,14 @@ $(document).ready(function () {
         "responsive": {
             "details": "false"
         },
+        "dom": 'Bfrtip',
+        "buttons": [
+            "excel", "pdf", "print"
+        ],
         "bAutoWidth": "false",
         "lengthMenu": [[5, 10, 15, 20, 25], [5, 10, 15, 20, 25]],
         "pageLength": 5,
         "order": [[0, "asc"]],
-        "buttons": [["copy", "csv", "excel", "pdf", "print"]],
         "language": {
             "sInfoEmpty": "Nenhum registro encontrado",
             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -205,11 +208,20 @@ function prepareFormDAta($form) {
 }
 
 function salvar(){
-    var prepareData = $("#formCadastro");
-    var dadosCadastrais = prepareFormDAta(prepareData);
+    var prepareData = prepareFormDAta($("#formCadastro"));
 
+    var dadosCadastraisObject = JSON.parse(prepareData);
+
+    dadosCadastraisObject.celular = [];
+    dadosCadastraisObject.celular[0] = dadosCadastraisObject.celular1;
+    dadosCadastraisObject.celular[1] = dadosCadastraisObject.celular2;
+    dadosCadastraisObject.celular[2] = dadosCadastraisObject.telefoneResidencial;
+
+    dadosCadastrais = JSON.stringify(dadosCadastraisObject);
+
+    console.log(dadosCadastraisObject);
     console.log(dadosCadastrais);
-    
+
     $.ajax({
         url:'../app_university_republic/estudante_controller.php',
         type:'POST',

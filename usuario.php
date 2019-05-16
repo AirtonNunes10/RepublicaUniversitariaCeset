@@ -14,6 +14,11 @@
 	<script src="js/angular.min.js"></script>
 	<script src="js/cadastros_usuarios.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+	
+	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+ 
+	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
 	<script src="js/buttons.html5.min.js"></script>
 	<script src="js/buttons.print.min.js"></script>
@@ -27,16 +32,10 @@
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
- 
-	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-
 	<!-- Estilos personalizados para este modelo -->
 	<link href="css/starter-template.css" rel="stylesheet">
-	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
 
 </head>
-
 
 <body>
 
@@ -112,14 +111,14 @@
 						<select name="tipoUsuario" id="tipoUsuario" required ng-model="tipoUsuario" class="form-control"
 							onchange="changeType()">
 							<option></option>
-							<option value="admin">Administrador</option>
-							<option value="estud">Estudante</option>
-							<option value="func">Funcionario</option>
-							<option value="tesou">Tesoureiro</option>
+							<option value="1">Administrador</option>
+							<option value="2">Estudante</option>
+							<option value="3">Funcionario</option>
+							<option value="4">Tesoureiro</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
-						<label for="email">Email</label>
+						<label for="email">E-mail</label>
 						<input name="email" type="text" required ng-model="email" class="form-control" id="email"
 							placeholder="example@gmail.com">
 					</div>
@@ -206,34 +205,19 @@
 					<div class="borda"></div>
 					<h5 class="featurette-heading"><span class="text-muted">Telefones para contato</span></h5>
 					<div class="form-group col-sm-4">
-						<label for="dddCelular1">DDD 1</label>
-						<input name="dddCelular1" type="numeric" required ng-model="dddCelular1" class="form-control"
-							id="dddCelular1" placeholder="(00)">
+						<label for="celular1">Celular 1</label>
+						<input name="celular1" type="numeric" required ng-model="celular1" class="form-control" 
+							id="celular1" placeholder="(00)00000-0000">
 					</div>
 					<div class="form-group col-sm-4">
-						<label for="telefoneCelular1">Celular 1</label>
-						<input name="telefoneCelular1" type="numeric" required ng-model="telefoneCelular1"
-							class="form-control" id="telefoneCelular1" placeholder="00000-0000">
+						<label for="celular2">Celular 2</label>
+						<input name="celular2" type="numeric" ng-model="celular2" class="form-control" 
+							id="celular2" placeholder="(00)00000-0000">
 					</div>
 					<div class="form-group col-sm-4">
-						<label for="dddCelular2">DDD 2</label>
-						<input name="dddCelular2" type="numeric" ng-model="dddCelular2" class="form-control"
-							id="dddCelular2" placeholder="(00)">
-					</div>
-					<div class="form-group col-sm-4">
-						<label for="telefoneCelular2">Celular 2</label>
-						<input name="telefoneCelular2" type="numeric" ng-model="telefoneCelular2" class="form-control"
-							id="telefoneCelular2" placeholder="00000-0000">
-					</div>
-					<div class="form-group col-sm-4">
-						<label for="dddResidencial">DDD Fixo</label>
-						<input name="dddResidencial" type="numeric" ng-model="dddResidencial" class="form-control"
-							id="dddResidencial" placeholder="(00)">
-					</div>
-					<div class="form-group col-sm-4">
-						<label for="telefoneResidencial">Telefone fixo</label>
+						<label for="telefoneResidencial">Telefone Residencial</label>
 						<input name="telefoneResidencial" type="numeric" ng-model="telefoneResidencial" class="form-control"
-							id="telefoneResidencial" placeholder="0000-0000">
+							id="telefoneResidencial" placeholder="(00)0000-0000">
 					</div>
 				</div>
 
@@ -337,7 +321,7 @@
 								<tr>
 									<th>CPF</th>
 									<th>Nome</th>
-									<th>Email</th>
+									<th>E-mail</th>
 									<th>Instituição</th>
 									<th>Curso</th>
 									<th>Perído Atual</th>
@@ -353,7 +337,7 @@
 								<tr>
 									<th>CPF</th>
 									<th>Nome</th>
-									<th>Email</th>
+									<th>E-mail</th>
 									<th>Departamento</th>
 									<th>Profissão</th>
 									<th>Data Cadastro</th>

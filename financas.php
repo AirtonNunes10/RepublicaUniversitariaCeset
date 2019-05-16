@@ -15,21 +15,27 @@
 	<script src="js/cadastros_financas.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
+	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+ 
+	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
+
 	<title>Cesert</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
- 
-	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-
 	<!-- Estilos personalizados para este modelo -->
 	<link href="css/starter-template.css" rel="stylesheet">
-	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
 
 </head>
-
 
 <body>
 
@@ -88,8 +94,7 @@
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="tipoPagamento">Tipo pagamento</label>
-									<select name="tipoPagamento" id="tipoPagamento" required ng-model="tipoPagamento" class="form-control"
-										>
+									<select name="tipoPagamento" id="tipoPagamento" required ng-model="tipoPagamento" class="form-control">
 										<option></option>
 										<option>Doação</option>
 										<option>Mensalidade</option>
@@ -102,7 +107,7 @@
 										id="dataPagamento" placeholder="dd/mm/aaaa">
 								</div>
 								<div class="form-group col-sm-4">
-									<label for="valorMensalidade">Valor mensalidade</label>
+									<label for="valorMensalidade">Valor pagamento</label>
 									<input name="valorMensalidade" type="numeric" required ng-model="valorMensalidade" class="form-control" id="valorMensalidade"
 										placeholder="00,00">
 								</div>
@@ -215,8 +220,8 @@
 				<table cellpadding='1' cellspacing='1' id='tabelaConsultarSaldo' class="table table-striped table-bordered" width='100%'>
 					<thead>
 						<tr>
-							<th>Valor pagamentos</th>
-							<th>Valor despesas</th>
+							<th>Valor recebido</th>
+							<th>Valor despesa</th>
 							<th>Valor saldo</th>
 						</tr>
 					</thead>

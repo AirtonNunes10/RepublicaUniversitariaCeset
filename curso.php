@@ -15,18 +15,25 @@
 	<script src="js/cadastros_cursos.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
+	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+ 
+	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
+
 	<title>Cesert</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
- 
-	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-
 	<!-- Estilos personalizados para este modelo -->
 	<link href="css/starter-template.css" rel="stylesheet">
-	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
 
 </head>
 

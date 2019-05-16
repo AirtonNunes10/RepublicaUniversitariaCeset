@@ -4,6 +4,10 @@ $(document).ready(function () {
         "responsive": {
             "details": "false"
         },
+        "dom": 'Bfrtip',
+        "buttons": [
+            "excel", "pdf", "print"
+        ],
         "bAutoWidth": "false",
         "lengthMenu": [[5, 10, 15, 20, 25], [5, 10, 15, 20, 25]],
         "pageLength": 5,
