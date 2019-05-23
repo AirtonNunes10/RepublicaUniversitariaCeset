@@ -18,7 +18,7 @@ class Conexao{
 				"$this->user",
 				"$this->pass"
 			);
-
+			$conexao->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			return $conexao;
 
 		}catch (PDOException $e){

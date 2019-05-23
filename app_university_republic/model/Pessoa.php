@@ -1,15 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author myggor
- */
 abstract class Pessoa {
 
     private $cpf;
@@ -22,6 +12,7 @@ abstract class Pessoa {
     private $email;
     private $senha;
     private $cep;
+    private $endereco;
     private $numero;
     private $bairro;
     private $cidade;
@@ -30,20 +21,24 @@ abstract class Pessoa {
     private $celular;
 
     function __construct($dados) {
-        $this->setBairro($dados->bairro);
-        $this->setCep($dados->cep);
-        $this->setCidade($dados->cidade);
-        $this->setComplemento($dados->complemento);
-        $this->setNumero($dados->numero);
-        $this->setUf($dados->uf);
-                
-        $this->setEmail($dados->email);
+        $this->setCpf($dados->cpf); 
         $this->setNome($dados->nome);
-        $this->setDataNascimento($dados->dataNascimento);
-        $this->setCpf($dados->cpf);
         $this->setRg($dados->rg);
+        $this->setDataNascimento($dados->dataNascimento);
+        $this->seTsexo($dados->sexo);
+        $this->setEstadoCivil($dados->estadoCivil);
+        $this->setTipoUsuario($dados->tipoUsuario);
+        $this->setEmail($dados->email);
+        $this->setSenha($dados->senha);
+        $this->setCep($dados->cep);
+        $this->setEndereco($dados->endereco);
+        $this->setNumero($dados->numero);
+        $this->setBairro($dados->bairro);
+        $this->setCidade($dados->cidade);
+        $this->setUf($dados->uf);
+        $this->setComplemento($dados->complemento);
         $this->setCelular($dados->celular);
-        $this->setTelefoneResidencial($dados->telefoneResidencial);
+        
     }
 
     public function getCpf() {
@@ -86,6 +81,10 @@ abstract class Pessoa {
         return $this->cep;
     }
 
+    public function getEndereco() {
+        return $this->endereco;
+    }
+
     public function getNumero() {
         return $this->numero;
     }
@@ -119,7 +118,7 @@ abstract class Pessoa {
             }
             //$return = $thisCelular;
         }
-        return $return;
+        return json_encode($return);
     }
 
     public function setCpf($cpf) {
@@ -160,6 +159,10 @@ abstract class Pessoa {
 
     public function setCep($cep) {
         $this->cep = $cep;
+    }
+
+    public function setEndereco($endereco) {
+        $this->endereco = $endereco;
     }
 
     public function setNumero($numero) {

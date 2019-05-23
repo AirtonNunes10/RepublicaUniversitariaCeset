@@ -1,21 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once __DIR__ . '/Pessoa.php';
 
-/**
- * Description of Estudante
- *
- * @author myggor
- */
-
-require_once __DIR__.'/Pessoa.php';
-
-class Estudante extends Pessoa {
-    
+class Estudante extends Pessoa
+{
     private $instituicao;
     private $matricula;
     private $curso;
@@ -24,172 +12,190 @@ class Estudante extends Pessoa {
     private $periodo;
     private $escolaridade;
     private $conexao;
-    
-    function __construct($dados, $conexao) {
+
+    function __construct($dados, $conexao)
+    {
         parent::__construct($dados);
-        $this->conexao = $conexao;
+        $this->conexao = $conexao->conectar();
         $this->setCurso($dados->curso);
         $this->setDataFinalCurso($dados->dataFinalCurso);
         $this->setDataInicioCurso($dados->dataInicioCurso);
         $this->setEscolaridade($dados->escolaridade);
         $this->setMatricula($dados->matricula);
         $this->setPeriodo($dados->periodo);
+        $this->setInstituicao($dados->instituicao);
     }
-    
-    function getInstituicao() {
+
+    function getInstituicao()
+    {
         return $this->instituicao;
     }
 
-    function getMatricula() {
+    function getMatricula()
+    {
         return $this->matricula;
     }
 
-    function getCurso() {
+    function getCurso()
+    {
         return $this->curso;
     }
 
-    function getDataInicioCurso() {
+    function getDataInicioCurso()
+    {
         return $this->dataInicioCurso;
     }
 
-    function getDataFinalCurso() {
+    function getDataFinalCurso()
+    {
         return $this->dataFinalCurso;
     }
 
-    function getPeriodo() {
+    function getPeriodo()
+    {
         return $this->periodo;
     }
 
-    function getEscolaridade() {
+    function getEscolaridade()
+    {
         return $this->escolaridade;
     }
 
-    function setInstituicao($instituicao) {
+    function setInstituicao($instituicao)
+    {
         $this->instituicao = $instituicao;
     }
 
-    function setMatricula($matricula) {
+    function setMatricula($matricula)
+    {
         $this->matricula = $matricula;
     }
 
-    function setCurso($curso) {
+    function setCurso($curso)
+    {
         $this->curso = $curso;
     }
 
-    function setDataInicioCurso($dataInicioCurso) {
+    function setDataInicioCurso($dataInicioCurso)
+    {
         $this->dataInicioCurso = $dataInicioCurso;
     }
 
-    function setDataFinalCurso($dataFinalCurso) {
+    function setDataFinalCurso($dataFinalCurso)
+    {
         $this->dataFinalCurso = $dataFinalCurso;
     }
 
-    function setPeriodo($periodo) {
+    function setPeriodo($periodo)
+    {
         $this->periodo = $periodo;
     }
 
-    function setEscolaridade($escolaridade) {
+    function setEscolaridade($escolaridade)
+    {
         $this->escolaridade = $escolaridade;
     }
 
-    
-    public function excluirCadastro() {
+
+    public function excluirCadastro()
+    {
         var_dump($this->getCelular());
         var_dump($this->getCelularClean());
         exit();
     }
 
-    public function salvarCadastro() {
-        $query = 'insert into tb_estudante(cpf, nome, rg, data_nascimento, sexo, estado_civil, tipo_usuario, email, senha, instituicao, matricula, curso, data_inicio_curso, data_final_curso, periodo, escolaridade)
-				values(:cpf, :nome, :rg, :dataNascimento, :sexo, :estadoCivil, :tipoUsuario, :email, :senha, :instituicao, :matricula, :curso, :dataInicioCurso, :dataFinalCurso, :periodo, :escolaridade)';
+    public function salvarCadastro()
+    {
+        try {
+            $query = 'insert into tb_usuario (cpf, nome, rg, data_nascimento, sexo, estado_civil, tipo_usuario, email, senha, 
+                cep, endereco, numero, bairro, cidade, uf, complemento, celular)
+                values(:cpf, :nome, :rg, :dataNascimento, :sexo, :estadoCivil, :tipoUsuario, :email, :senha, 
+                :cep, :endereco, :numero, :bairro, :cidade, :uf, :complemento, :cel)';
 
-        $stmt = $this->conexao->prepare($query);
+            $stmt = $this->conexao->prepare($query);
 
-        $stmt->bindValue('cpf', preg_replace('~\D~', '', $this->getCpf()));
-        $stmt->bindValue('nome', $this->getNome());
-        $stmt->bindValue('rg', preg_replace('~\D~', '', $this->getRg()));
-        $stmt->bindValue('dataNascimento', $this->getDataNascimento());
-        $stmt->bindValue('sexo', $this->getSexo());
-        $stmt->bindValue('estadoCivil', $this->getEstadoCivel());
-        $stmt->bindValue('tipoUsuario', $this->getTipoUsuario());
-        $stmt->bindValue('email', $this->getEmail());
-        $stmt->bindValue('senha', $this->getSenha());
-        $stmt->bindValue('instituicao', $this->getInstituicao());
-        $stmt->bindValue('matricula', $this->getMatricula());
-        $stmt->bindValue('curso', $this->getCurso());
-        $stmt->bindValue('dataInicioCurso', $this->getDataInicioCurso());
-        $stmt->bindValue('dataFinalCurso', $this->getDataFinalCurso());
-        $stmt->bindValue('periodo', $this->getPeriodo());
-        $stmt->bindValue('escolaridade', $this->getEscolaridade());
-        
-        $stmt->execute();
+            $stmt->bindValue('cpf', preg_replace('~\D~', '', $this->getCpf()));
+            $stmt->bindValue('nome', $this->getNome());
+            $stmt->bindValue('rg', preg_replace('~\D~', '', $this->getRg()));
+            $stmt->bindValue('dataNascimento', $this->getDataNascimento());
+            $stmt->bindValue('sexo', $this->getSexo());
+            $stmt->bindValue('estadoCivil', $this->getEstadoCivil());
+            $stmt->bindValue('tipoUsuario', $this->getTipoUsuario());
+            $stmt->bindValue('email', $this->getEmail());
+            $stmt->bindValue('senha', $this->getSenha());
+            $stmt->bindValue('cep', preg_replace('~\D~', '', $this->getCep()));
+            $stmt->bindValue('endereco', $this->getEndereco());
+            $stmt->bindValue('numero', $this->getNumero());
+            $stmt->bindValue('bairro',  $this->getBairro());
+            $stmt->bindValue('cidade', $this->getCidade());
+            $stmt->bindValue('uf', $this->getUf());
+            $stmt->bindValue('complemento', $this->getComplemento());
+            $stmt->bindValue('cel', $this->getCelularClean());
 
-        $id_estudante = 'select id_estudante from tb_estudante where cpf = "'. $this->estudante->__get('cpf') . '"';
+            $result = $stmt->execute();
+            $rows = $stmt->rowCount();
+            if ($rows > 0) {
 
-        $resultado = $this->conexao->query($id_estudante);
-        $idEstudante = $resultado->fetch(PDO::FETCH_OBJ);
-        /*
-        echo '<pre>';
-            print_r($idEstudante);
-        echo '</pre>';
+                try {
 
-        echo $idEstudante->id_estudante;
-        */
-        $query = 'insert into tb_endereco(cep, endereco, numero, bairro, cidade, uf, complemento, id_estudante)
-            values(:cep, :endereco, :numero, :bairro, :cidade, :uf, :complemento, '. $idEstudante->id_estudante.')';
+                    $id_usuario = 'select id_usuario from tb_usuario where cpf = "' .  preg_replace('~\D~', '', $this->getCpf()) . '"';
+                    $get = $this->conexao->query($id_usuario);
+                    $resultado = $get->fetch(PDO::FETCH_OBJ);
+                    //var_dump($stmt->errorInfo());
+                    $idUsuario = $resultado->id_usuario;
 
-        $query = $this->conexao->prepare($query);
+                    $query = 'insert into tb_estudante(instituicao, matricula, curso, data_inicio_curso, data_final_curso, periodo, escolaridade, id_usuario)
+                    values(:instituicao, :matricula, :curso, :dataInicioCurso, :dataFinalCurso, :periodo, :escolaridade, :iduser)';
 
-        $query->bindValue('cep', preg_replace('~\D~', '', $this->getCep()));
-        $query->bindValue('endereco', $this->getEndereco());
-        $query->bindValue('numero', $this->getNumero());
-        $query->bindValue('bairro',  $this->getBairro());
-        $query->bindValue('cidade', $this->getCidade());
-        $query->bindValue('uf', $this->getUf());
-        $query->bindValue('complemento', $this->getComplemento());
+                    $query = $this->conexao->prepare($query);
 
-        $query->execute();
+                    $query->bindValue('instituicao', $this->getInstituicao());
+                    $query->bindValue('matricula', $this->getMatricula());
+                    $query->bindValue('curso', $this->getCurso());
+                    $query->bindValue('dataInicioCurso', $this->getDataInicioCurso());
+                    $query->bindValue('dataFinalCurso', $this->getDataFinalCurso());
+                    $query->bindValue('periodo', $this->getPeriodo());
+                    $query->bindValue('escolaridade', $this->getEscolaridade());
+                    $query->bindParam('iduser', $idUsuario, PDO::PARAM_INT);
 
-        $query = 'insert into tb_telefone(ddd_celular1, telefone_celular1, ddd_celular2, telefone_celular2, ddd_residencial, telefone_residencial, id_estudante)
-            values(:dddCelular1, :telefoneCelular1, :dddCelular2, :telefoneCelular2, :dddResidencial, :telefoneResidencial, '. $idEstudante->id_estudante.')';
-
-        $query = $this->conexao->prepare($query);
-
-        $query->bindValue(':dddCelular1', preg_replace('~\D~', '', $this->estudante->__get('dddCelular1')));
-        $query->bindValue(':telefoneCelular1', preg_replace('~\D~', '', $this->estudante->__get('telefoneCelular1')));
-        $query->bindValue(':dddCelular2', preg_replace('~\D~', '', $this->estudante->__get('dddCelular2')));
-        $query->bindValue(':telefoneCelular2', preg_replace('~\D~', '', $this->estudante->__get('telefoneCelular2')));
-        $query->bindValue(':dddResidencial', preg_replace('~\D~', '', $this->estudante->__get('dddResidencial')));
-        $query->bindValue(':telefoneResidencial', preg_replace('~\D~', '', $this->estudante->__get('telefoneResidencial')));
-
-        $query->execute(array(
-            ':dddCelular1' => $this->estudante->__get('dddCelular1'),
-            ':telefoneCelular1' => $this->estudante->__get('telefoneCelular1'),
-            ':dddCelular2' => $this->estudante->__get('dddCelular2'),
-            ':telefoneCelular2' => $this->estudante->__get('telefoneCelular2'),
-            ':dddResidencial' => $this->estudante->__get('dddResidencial'),
-            ':telefoneResidencial' => $this->estudante->__get('telefoneResidencial')
-        ));
-        
+                    $result = $query->execute();
+                    $rows = $query->rowCount();
+                    if ($rows > 0) {
+                        return true;
+                    }
+                } catch (PDOException $e) {
+                    return $e->getMessage();
+                }
+            }
+        } catch (PDOException $e) {
+            $codigoErro = $e->getCode();
+            if($codigoErro === "23000"){
+                return "CPF, RG ou email já cadastrado(s)";
+            }
+        }
     }
 
-    public function validarDados() { //O QUE ESSA FUNÇÃO VALIDA?
+    public function validarDados()
+    { // Valida os dados preenchidos se são vazios ou nulos
         $selfVars = get_object_vars($this);
 
         foreach ($selfVars as $currentKey => $currentVal) {
             if (!is_null($currentVal)) {
-                continue;
+                if (!empty($currentVal)) {
+                    continue;
+                } else {
+                    $mensagemErro = $currentKey . " não possui valor atribuído";
+                    break;
+                }
             } else {
-                $mensagemErro = $currentKey. " com valor ".$currentVal;
+                $mensagemErro = $currentKey . " com valor " . $currentVal;
                 break;
             }
         }
-        if(!empty($mensagemErro)){
+        if (!empty($mensagemErro)) {
             throw new Exception($mensagemErro);
         }
-        
-        return true;
-    
-    }
 
+        return true;
+    }
 }

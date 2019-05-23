@@ -1,3 +1,5 @@
+/* global toastr */
+
 $(document).ready(function () {
     $("#areaEstudante").hide();
     $("#areaFuncionario").hide();
@@ -7,9 +9,9 @@ $(document).ready(function () {
     $('#numero').mask('0000');
     $('#celular1').mask('(00)00000-0000');
     $('#celular2').mask('(00)00000-0000');
-    $('#telefoneResidencial').mask('0000-0000');
+    $('#telefoneResidencial').mask('(00)0000-0000');
     $('#periodo').mask('00');
-    
+
     tabelaEstudantes = $('#tabelaConsultarEstudante').DataTable({
         "responsive": {
             "details": "false"
@@ -93,101 +95,61 @@ $(document).ready(function () {
             "type": "POST",
             "data": {
                 "key": "sefortervalidacaooualgoassim",
-                "action": "consultarEstudantesTable"
+                "action": "consultarFuncionariosTable"
             }
         }
     });
 
-    tabelaCursos = $('#tabelaConsultarCurso').DataTable({
-        "responsive": {
-            "details": "false"
-        },
-        "bAutoWidth": "false",
-        "lengthMenu": [[5, 10, 15, 20, 25], [5, 10, 15, 20, 25]],
-        "pageLength": 5,
-        "order": [[0, "asc"]],
-        "language": {
-            "sInfoEmpty": "Nenhum registro encontrado",
-            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-            "sInfoPostFix": "",
-            "sInfoThousands": ".",
-            "sLengthMenu": "_MENU_  Resultados por página",
-            "sLoadingRecords": "Carregando...",
-            "sProcessing": "Processando...",
-            "sZeroRecords": "Nenhum registro encontrado",
-            "sSearch": "Procurar",
-            "oPaginate": {
-                "sNext": "Próximo",
-                "sPrevious": "Anterior",
-                "sFirst": "Primeiro",
-                "sLast": "Último"
-            },
-            "oAria": {
-                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                "sSortDescending": ": Ordenar colunas de forma descendente"
-            }
-        },
-        "ajax": {
-            "url": "caminhoprafazeraconsultaereceberumarraydedadoscomoretorno",
-            "type": "POST",
-            "data": {
-                "key": "sefortervalidacaooualgoassim",
-                "action": "pegusdadodocurso"
-            }
-        }
-    });
 
     $('#tabCadastrarUsuario').tabs({
-        activate: function (event, ui) {
+        show: function (_event, ui) {
         }
     });
     $('#tabConsultarUsuario').tabs({
-        activate: function (event, ui) {
+        activate: function (e, ui) {
         }
     });
-    $('#tabConsultarEstudante').tabs({
-        activate: function (event, ui) {
-            tabelaEstudantes.ajax.reload(null, false);
+    $('#consultarUsuario').tabs({
+        activate: function (e, ui) {
+            tabelaEstudantes.ajax.reload();
+            tabelaFuncionarios.ajax.reload();
         }
     });
-    $('#tabConsultarFuncionario').tabs({
-        activate: function (event, ui) {
-            tabelaFuncionarios.ajax.reload(null, false);
+    $('#consultarEstudante').tabs({
+        activate: function (e, ui) {
+            tabelaEstudantes.ajax.reload();
         }
     });
-    $('#tabCadastrarCurso').tabs({
-        activate: function (event, ui) {
+    $('#consultarFuncionario').tabs({
+        activate: function (e, ui) {
+            tabelaFuncionarios.ajax.reload();
         }
     });
-    $('#tabConsultarCurso').tabs({
-        activate: function (event, ui) {
-            tabelaFuncionarios.ajax.reload(null, false);
-        }
-    });
+
 });
+
 
 function changeType() {
     var type = $("#tipoUsuario option:selected").val();
-    if (type === "admin") {
+    if (type === "1") {
         $("#action").val("cadastrarEstudante");
         $("#areaEstudante").show();
         $("#areaFuncionario").hide();
     }
-    else if (type === "estud") {
+    else if (type === "2") {
         $("#action").val("cadastrarEstudante");
         $("#areaEstudante").show();
         $("#areaFuncionario").hide();
     }
-    else if (type === "tesou") {
-        $("#action").val("cadastrarEstudante");
-        $("#areaEstudante").show();
-        $("#areaFuncionario").hide();
-    }
-    else if (type === "func") {
+    else if (type === "3") {
         $("#action").val("cadastrarFuncionario");
         $("#areaEstudante").hide();
         $("#areaFuncionario").show();
+    }
+    else if (type === "4") {
+        $("#action").val("cadastrarEstudante");
+        $("#areaEstudante").show();
+        $("#areaFuncionario").hide();
     }
     else {
         $("#action").val("none");
@@ -204,10 +166,10 @@ function prepareFormDAta($form) {
         indexed_array[n['name']] = n['value'];
     });
 
-   return JSON.stringify(indexed_array);
+    return JSON.stringify(indexed_array);
 }
 
-function salvar(){
+function salvar() {
     var prepareData = prepareFormDAta($("#formCadastro"));
 
     var dadosCadastraisObject = JSON.parse(prepareData);
@@ -219,12 +181,9 @@ function salvar(){
 
     dadosCadastrais = JSON.stringify(dadosCadastraisObject);
 
-    console.log(dadosCadastraisObject);
-    console.log(dadosCadastrais);
-
     $.ajax({
-        url:'../app_university_republic/estudante_controller.php',
-        type:'POST',
+        url: '../app_university_republic/estudante_controller.php',
+        type: 'POST',
         data: {
             action: $("#action").val(),
             user: dadosCadastrais,
@@ -232,8 +191,35 @@ function salvar(){
         },
         dataType: 'JSON',
         success: function (response) {
-            if(response.sucesso === 1){
-                alert("aehoo");
+            if (response.sucesso === 1) {
+                toastr["success"](response.mensagem, "Sucesso!");
+                tabelaEstudantes.ajax.reload();
+                tabelaFuncionarios.ajax.reload();
+            } else {
+                toastr["error"](response.mensagem, "Erro!");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+}
+
+function excluirCadastro(id) {
+    $.ajax({
+        url: '../app_university_republic/estudante_controller.php',
+        type: 'POST',
+        data: {
+            action: "excluirUsuario",
+            userID: id,
+            key: "segredo"
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.sucesso === 1) {
+                alert(response.mensagem);
+                tabelaEstudantes.ajax.reload();
+                tabelaFuncionarios.ajax.reload();
             } else {
                 alert("poxa, deu errado :c");
             }

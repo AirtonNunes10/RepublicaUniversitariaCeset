@@ -12,11 +12,14 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>
+	<script src="js/toastr.min.js"></script>
 	<script src="js/cadastros_usuarios.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	
-	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
  
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -91,7 +94,7 @@
 					<div class="form-group col-sm-4">
 						<label for="sexo">Sexo</label>
 						<select name="sexo" required ng-model="sexo" class="form-control">
-							<option></option>
+							<option>[Selecione]</option>
 							<option value="F">Femino</option>
 							<option value="M">Masculino</option>
 						</select>
@@ -99,7 +102,7 @@
 					<div class="form-group col-sm-4">
 						<label for="estadoCivil">Estado civil</label>
 						<select name="estadoCivil" required ng-model="estadoCivil" class="form-control">
-							<option></option>
+							<option>[Selecione]</option>
 							<option>Solteiro</option>
 							<option>Casado</option>
 							<option>Divorciado</option>
@@ -110,7 +113,7 @@
 						<label for="tipoUsuario">Tipo de usuário</label>
 						<select name="tipoUsuario" id="tipoUsuario" required ng-model="tipoUsuario" class="form-control"
 							onchange="changeType()">
-							<option></option>
+							<option>[Selecione]</option>
 							<option value="1">Administrador</option>
 							<option value="2">Estudante</option>
 							<option value="3">Funcionario</option>
@@ -162,7 +165,7 @@
 					<div class="form-group col-sm-4">
 						<label for="uf">UF</label>
 						<select name="uf" required ng-model="uf" class="form-control">
-							<option></option>
+							<option>[Selecione]</option>
 							<option>AC</option>
 							<option>AL</option>
 							<option>AP</option>
@@ -237,11 +240,6 @@
 							<input name="profissao" type="text" ng-model="profissao" class="form-control"
 								id="profissao" placeholder="Profissao">
 						</div>
-						<div class="form-group col-sm-4">
-							<label for="dataCadastro">Data de cadastro</label>
-							<input name="dataCadastro" type="date" ng-model="dataCadastro" class="form-control"
-								id="dataCadastro" placeholder="dataCadastro">
-						</div>
 					</div>
 				</div>
 
@@ -284,7 +282,7 @@
 						<div class="form-group col-sm-4">
 							<label for="escolaridade">Nível escolaridade</label>
 							<select name="escolaridade" class="form-control">
-								<option></option>
+								<option>[Selecione]</option>
 								<option>Fundamental</option>
 								<option>Médio</option>
 								<option>Superior</option>
@@ -327,6 +325,7 @@
 									<th>Perído Atual</th>
 									<th>Data Inicio Curso</th>
 									<th>Data Final Curso</th>
+									<th>Opções</th>
 								</tr>
 							</thead>
 						</table>
@@ -341,6 +340,7 @@
 									<th>Departamento</th>
 									<th>Profissão</th>
 									<th>Data Cadastro</th>
+									<th>Opções</th>
 								</tr>
 							</thead>
 						</table>
