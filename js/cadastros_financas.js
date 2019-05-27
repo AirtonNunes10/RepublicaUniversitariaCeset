@@ -1,3 +1,5 @@
+/* global toastr */
+
 $(document).ready(function () {
 
     tabelaPagamentos = $('#tabelaConsultarPagamento').DataTable({
@@ -133,39 +135,79 @@ $(document).ready(function () {
     });
     
     $('#tabPagamento').tabs({
-        activate: function (event, ui) {
+        show: function (_event, ui) {
         }
     });
     $('#tabDespesa').tabs({
-        activate: function (event, ui) {
+        show: function (_event, ui) {
         }
     });
     $('#tabSaldo').tabs({
-        activate: function (event, ui) {
+        show: function (_event, ui) {
         }
     });
     $('#tabCadastrarPagamento').tabs({
-        activate: function (event, ui) {
+        show: function (_event, ui) {
         }
     });
     $('#tabConsultarPagamento').tabs({
-        activate: function (event, ui) {
+        activate: function (e, ui) {
             tabelaPagamentos.ajax.reload(null, false);
         }
     });
     $('#tabCadastrarDespesa').tabs({
-        activate: function (event, ui) {
+        show: function (_event, ui) {
         }
     });
     $('#tabConsultarDespesa').tabs({
-        activate: function (event, ui) {
+        activate: function (e, ui) {
             tabelaDepesas.ajax.reload(null, false);
         }
     });
     $('#tabConsultarSaldo').tabs({
-        activate: function (event, ui) {
+        activate: function (e, ui) {
             tabelaSaldos.ajax.reload(null, false);
         }
     });
 });
 
+function prepareFormDAta($form) {
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function (n, i) {
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return JSON.stringify(indexed_array);
+}
+
+function salvar() {
+    var prepareData = prepareFormDAta($("#formCadastro"));
+
+    var dadosCadastraisObject = JSON.parse(prepareData);
+
+    dadosCadastrais = JSON.stringify(dadosCadastraisObject);
+
+    $.ajax({
+        url: '../app_university_republic/financas_controller.php',
+        type: 'POST',
+        data: {
+            action: $("#action").val(),
+            user: dadosCadastrais,
+            key: "segredo"
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.sucesso === 1) {
+                toastr["success"](response.mensagem, "Sucesso!");
+                tabelaCursos.ajax.reload();
+            } else {
+                toastr["error"](response.mensagem, "Erro!");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+}

@@ -12,11 +12,14 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>
+	<script src="js/toastr.min.js"></script>
 	<script src="js/cadastros_financas.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
-	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
  
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -95,16 +98,11 @@
 								<div class="form-group col-sm-4">
 									<label for="tipoPagamento">Tipo pagamento</label>
 									<select name="tipoPagamento" id="tipoPagamento" required ng-model="tipoPagamento" class="form-control">
-										<option></option>
+										<option>[Selecione]</option>
 										<option>Doação</option>
 										<option>Mensalidade</option>
 										<option>Multa</option>
 									</select>
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="dataPagamento">Data pagamento</label>
-									<input name="dataPagamento" type="date" required ng-model="dataPagamento" class="form-control"
-										id="dataPagamento" placeholder="dd/mm/aaaa">
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="valorMensalidade">Valor pagamento</label>
@@ -158,8 +156,8 @@
 								<input hidden id="action" name="action" value="none">
 
 								<div class="form-group col-sm-4">
-									<label for="codigo">Código</label>
-									<input name="codigo" type="numeric" readonly ng-model="codigo" class="form-control" id="codigo" placeholder="0000">
+									<label for="codigoCompra">Código da compra</label>
+									<input name="codigoCompra" type="numeric" readonly ng-model="codigoCompra" class="form-control" id="codigoCompra" placeholder="000000">
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="descricao">Descrição</label>
@@ -203,7 +201,7 @@
 						<table cellpadding='1' cellspacing='1' id='tabelaConsultarDespesa' class="table table-striped table-bordered" width='100%'>
 							<thead>
 								<tr>
-									<th>Código</th>
+									<th>Código da compra</th>
 									<th>Descrição</th>
 									<th>Quantidade</th>
 									<th>Local compra</th>

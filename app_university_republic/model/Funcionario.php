@@ -79,7 +79,7 @@ class Funcionario extends Pessoa
                     $idUsuario = $resultado->id_usuario;
 
                     $query = 'insert into tb_funcionario(departamento, profissao, id_usuario)
-            values(:departamento, :profissao, :iduser)';
+                    values(:departamento, :profissao, :iduser)';
 
                     $query = $this->conexao->prepare($query);
 
@@ -87,7 +87,7 @@ class Funcionario extends Pessoa
                     $query->bindValue('profissao', $this->getProfissao());
                     $query->bindParam('iduser', $idUsuario, PDO::PARAM_INT);
 
-                    $query->execute();
+                    $result = $query->execute();
                     $rows = $query->rowCount();
                     if ($rows > 0) {
                         return true;
@@ -95,9 +95,12 @@ class Funcionario extends Pessoa
                 } catch (PDOException $e) {
                     return $e->getMessage();
                 }
-            } else { }
+            }
         } catch (PDOException $e) {
-            return $e->getMessage() . "... error codemod:" . $e->getCode();
+            $codigoErro = $e->getCode();
+            if($codigoErro === "23000"){
+                return "CPF, RG ou email já cadastrado(s)";
+            }
         }
     }
 

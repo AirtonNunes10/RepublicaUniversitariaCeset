@@ -12,11 +12,14 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.mask.js"></script>
 	<script src="js/angular.min.js"></script>
+	<script src="js/toastr.min.js"></script>
 	<script src="js/cadastros_cursos.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
-	<link href="js/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
  
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -105,6 +108,7 @@
 								<th>Código</th>
 								<th>Sigla</th>
 								<th>Curso</th>
+								<th>Opções</th>
 							</tr>
 						</thead>
 					</table>
