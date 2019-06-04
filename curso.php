@@ -66,11 +66,11 @@
 		<div class="tab-content">
 			<!-- DADOS DO CURSO -->
 			<div role="tabpanel" class="tab-pane active" id="cadastrarCurso">
-				<form class="center-from" method="post" action="curso_controller.php">
+				<form class="center-from" method="post" id="cursoForm">
 					<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
 					<div class="row col-md-12">
 
-						<input hidden id="action" name="action" value="cadastrarCurso">
+					<input hidden id="action" name="action" value="none">
 
 						<div class="form-group col-sm-4">
 							<label for="codigo">Código</label>
@@ -93,7 +93,7 @@
 						<br>
 						<div class="center-button" style="text-align: center;">
 							<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-							<button ng-disabled="!curso" type="submit" class="btn btn-primary">Salvar</button>
+							<button ng-disabled="!curso" onclick="salvarCurso()" class="btn btn-primary">Salvar</button>
 						</div>
 						<br>
 					</div>

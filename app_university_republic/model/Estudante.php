@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/Pessoa.php';
+require_once __DIR__ . '/../estudante.service.php';
 
 class Estudante extends Pessoa
 {
@@ -12,6 +13,7 @@ class Estudante extends Pessoa
     private $periodo;
     private $escolaridade;
     private $conexao;
+    private $auxService;
 
     function __construct($dados, $conexao)
     {
@@ -24,6 +26,7 @@ class Estudante extends Pessoa
         $this->setMatricula($dados->matricula);
         $this->setPeriodo($dados->periodo);
         $this->setInstituicao($dados->instituicao);
+        $this->auxService = new EstudanteService($conexao);
     }
 
     function getInstituicao()
@@ -97,20 +100,18 @@ class Estudante extends Pessoa
     }
 
 
-    public function excluirCadastro()
+    public function excluirCadastro($idUser)
     {
-        var_dump($this->getCelular());
-        var_dump($this->getCelularClean());
-        exit();
+        $this->auxService->excluirCadastro($idUser);
     }
 
     public function salvarCadastro()
     {
         try {
             $query = 'insert into tb_usuario (cpf, nome, rg, data_nascimento, sexo, estado_civil, tipo_usuario, email, senha, 
-                cep, endereco, numero, bairro, cidade, uf, complemento, celular)
+                cep, endereco, numero, bairro, cidade, uf, complemento, celular1, celular2)
                 values(:cpf, :nome, :rg, :dataNascimento, :sexo, :estadoCivil, :tipoUsuario, :email, :senha, 
-                :cep, :endereco, :numero, :bairro, :cidade, :uf, :complemento, :cel)';
+                :cep, :endereco, :numero, :bairro, :cidade, :uf, :complemento, :cel, :cel2)';
 
             $stmt = $this->conexao->prepare($query);
 
@@ -131,46 +132,80 @@ class Estudante extends Pessoa
             $stmt->bindValue('uf', $this->getUf());
             $stmt->bindValue('complemento', $this->getComplemento());
             $stmt->bindValue('cel', $this->getCelularClean());
+            $stmt->bindValue('cel2', $this->getCelular2Clean());
 
-            $result = $stmt->execute();
+            $stmt->execute();
             $rows = $stmt->rowCount();
             if ($rows > 0) {
-
                 try {
-
-                    $id_usuario = 'select id_usuario from tb_usuario where cpf = "' .  preg_replace('~\D~', '', $this->getCpf()) . '"';
-                    $get = $this->conexao->query($id_usuario);
-                    $resultado = $get->fetch(PDO::FETCH_OBJ);
-                    //var_dump($stmt->errorInfo());
-                    $idUsuario = $resultado->id_usuario;
-
-                    $query = 'insert into tb_estudante(instituicao, matricula, curso, data_inicio_curso, data_final_curso, periodo, escolaridade, id_usuario)
-                    values(:instituicao, :matricula, :curso, :dataInicioCurso, :dataFinalCurso, :periodo, :escolaridade, :iduser)';
-
-                    $query = $this->conexao->prepare($query);
-
-                    $query->bindValue('instituicao', $this->getInstituicao());
-                    $query->bindValue('matricula', $this->getMatricula());
-                    $query->bindValue('curso', $this->getCurso());
-                    $query->bindValue('dataInicioCurso', $this->getDataInicioCurso());
-                    $query->bindValue('dataFinalCurso', $this->getDataFinalCurso());
-                    $query->bindValue('periodo', $this->getPeriodo());
-                    $query->bindValue('escolaridade', $this->getEscolaridade());
-                    $query->bindParam('iduser', $idUsuario, PDO::PARAM_INT);
-
-                    $result = $query->execute();
-                    $rows = $query->rowCount();
+                    $stmt->closeCursor();
+                    $cleanCPF = preg_replace('~\D~', '', $this->getCpf());
+                    $stmt = $this->conexao->prepare("SELECT `id_usuario` FROM `tb_usuario` WHERE `tb_usuario`.`cpf`= :cpf");
+                    $stmt->bindParam('cpf', $cleanCPF, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $rows = $stmt->rowCount();
                     if ($rows > 0) {
-                        return true;
+                        $resultado = $stmt->fetch(PDO::FETCH_OBJ);
+                        //var_dump($stmt->errorInfo());
+                        $idUsuario = $resultado->id_usuario;
+
+                        $query = 'INSERT INTO tb_estudante(escolaridade, fk_estudante_usuario) VALUES(:escolaridade, :iduser)';
+
+                        $query = $this->conexao->prepare($query);
+                        $query->bindValue('escolaridade', $this->getEscolaridade());
+                        $query->bindParam('iduser', $idUsuario, PDO::PARAM_INT);
+
+                        $result = $query->execute();
+                        $rows = $query->rowCount();
+
+                        $cursos = $this->getCurso();
+                        $sucesso = false;
+                        for ($i = 0; $i < count($cursos); $i++) {
+                            if ($rows > 0) {
+                                $getIdEstudante = 'SELECT id_estudante FROM tb_estudante WHERE fk_estudante_usuario = ' . $idUsuario;
+                                $get = $this->conexao->query($getIdEstudante);
+                                $resultado = $get->fetch(PDO::FETCH_OBJ);
+                                //var_dump($stmt->errorInfo());
+                                $idEstudante = $resultado->id_estudante;
+                                $query = 'insert into tb_estudante_curso(fk_estudante_curso, fk_curso_estudante, '
+                                    . 'data_inicio_curso, data_final_curso, periodo, matricula, instituicao) '
+                                    . 'values(:idEst, :idCurso,  :dataInicioCurso, :dataFinalCurso, :periodo, :matricula, :instituicao)';
+
+                                $query = $this->conexao->prepare($query);
+                                //instituicao, matricula, curso, data_inicio_curso, data_final_curso, periodo, 
+                                //,  :curso,
+                                $query->bindValue('instituicao', $this->getInstituicao());
+                                $query->bindValue('matricula', $this->getMatricula());
+                                $query->bindValue('idCurso', $cursos[$i]);
+                                $query->bindValue('dataInicioCurso', $this->getDataInicioCurso());
+                                $query->bindValue('dataFinalCurso', $this->getDataFinalCurso());
+                                $query->bindValue('periodo', $this->getPeriodo());
+                                $query->bindParam('idEst', $idEstudante, PDO::PARAM_INT);
+
+                                $result = $query->execute();
+
+                                $rows = $query->rowCount();
+                                if ($rows > 0) {
+                                    $sucesso = true;
+                                } else {
+                                    $this->excluirCadastro($idUsuario);
+                                    break;
+                                }
+                            }
+                        }
+                        return $sucesso;
                     }
                 } catch (PDOException $e) {
+                    $this->excluirCadastro($idUsuario);
                     return $e->getMessage();
                 }
             }
         } catch (PDOException $e) {
             $codigoErro = $e->getCode();
-            if($codigoErro === "23000"){
+            if ($codigoErro === "23000") {
                 return "CPF, RG ou email já cadastrado(s)";
+            } else {
+                return $e->getMessage();
             }
         }
     }
@@ -199,3 +234,4 @@ class Estudante extends Pessoa
         return true;
     }
 }
+//por enquanto, de volta ao que funcionava

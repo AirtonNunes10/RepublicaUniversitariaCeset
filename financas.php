@@ -47,12 +47,6 @@
 
 	<br>
 
-	<?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == 1) { ?>
-	<div class="alert alert-success" role="alert" style="text-align: center;">
-		<h3 size="100">Cadastro realizado com sucesso!<h3>
-	</div>
-	<?php } ?>
-
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
@@ -75,10 +69,10 @@
 				</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="cadastrarPagamento">
-						<form class="center-from" method="post" action="pagamento_controller.php">
+						<form class="center-from" method="post" id="formPagamento">
 							<h5 class="featurette-heading"><span class="text-muted">Dados pagamentos</span></h5>
 
-							<input hidden id="action" name="action" value="none">
+							<!-- <input hidden id="action" name="action" value="cadastrarPagamento"> -->
 
 							<div class="row col-md-12">
 								<div class="form-group col-sm-4">
@@ -98,15 +92,15 @@
 								<div class="form-group col-sm-4">
 									<label for="tipoPagamento">Tipo pagamento</label>
 									<select name="tipoPagamento" id="tipoPagamento" required ng-model="tipoPagamento" class="form-control">
-										<option>[Selecione]</option>
+										<option value="">Selecione</option>
 										<option>Doação</option>
 										<option>Mensalidade</option>
 										<option>Multa</option>
 									</select>
 								</div>
 								<div class="form-group col-sm-4">
-									<label for="valorMensalidade">Valor pagamento</label>
-									<input name="valorMensalidade" type="numeric" required ng-model="valorMensalidade" class="form-control" id="valorMensalidade"
+									<label for="valorPagamento">Valor pagamento</label>
+									<input name="valorPagamento" type="numeric" required ng-model="valorPagamento" class="form-control" id="valorPagamento"
 										placeholder="00,00">
 								</div>
 							</div>
@@ -116,7 +110,7 @@
 								<br>
 								<div class="center-button" style="text-align: center;">
 									<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-									<button ng-disabled="!cpf" type="submit" class="btn btn-primary">Salvar</button>
+									<button ng-disabled="!cpf" onclick="salvarPagamento()" class="btn btn-primary">Salvar</button>
 								</div>
 								<br>
 							</div>
@@ -149,15 +143,12 @@
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="cadastrarDespesa">
-						<form class="center-from" method="post" action="despesa_controller.php">
+						<form class="center-from" method="post" id="formDespesa">
 							<h5 class="featurette-heading"><span class="text-muted">Dados despesas</span></h5>
 							<div class="row col-md-12">
-
-								<input hidden id="action" name="action" value="none">
-
 								<div class="form-group col-sm-4">
 									<label for="codigoCompra">Código da compra</label>
-									<input name="codigoCompra" type="numeric" readonly ng-model="codigoCompra" class="form-control" id="codigoCompra" placeholder="000000">
+									<input name="codigoCompra" type="numeric" ng-model="codigoCompra" class="form-control" id="codigoCompra" placeholder="000000">
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="descricao">Descrição</label>
@@ -167,7 +158,7 @@
 								<div class="form-group col-sm-4">
 									<label for="quantidade">Quantidade</label>
 									<input name="quantidade" type="numeric" required ng-model="quantidade" class="form-control" id="quantidade"
-										placeholder="00">
+										placeholder="000000">
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="localCompra">Local compra</label>
@@ -190,7 +181,7 @@
 								<br>
 								<div class="center-button" style="text-align: center;">
 									<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-									<button ng-disabled="!cpf" type="submit" class="btn btn-primary">Salvar</button>
+									<button ng-disabled="!valorCompra"  onclick="salvarDespesa()" class="btn btn-primary">Salvar</button>
 								</div>
 								<br>
 							</div>

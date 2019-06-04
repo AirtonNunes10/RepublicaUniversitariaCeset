@@ -6,7 +6,7 @@ $(document).ready(function () {
          "responsive": {
              "details": "false"
          },
-         "dom": 'Bfrtip',
+         "dom": 'Blfrtip',
          "buttons": [
              "excel", "pdf", "print"
          ],
@@ -72,8 +72,8 @@ function prepareFormDAta($form) {
     return JSON.stringify(indexed_array);
 }
 
-function salvar() {
-    var prepareData = prepareFormDAta($("#formCadastro"));
+function salvarCurso() {
+    var prepareData = prepareFormDAta($("#cursoForm"));
 
     var dadosCadastraisObject = JSON.parse(prepareData);
 
@@ -83,8 +83,8 @@ function salvar() {
         url: '../app_university_republic/curso_controller.php',
         type: 'POST',
         data: {
-            action: $("#action").val(),
-            user: dadosCadastrais,
+            action: "cadastrarCurso",
+            curso: dadosCadastrais,
             key: "segredo"
         },
         dataType: 'JSON',

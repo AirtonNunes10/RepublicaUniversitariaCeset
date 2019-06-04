@@ -7,21 +7,25 @@ header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
 header("Access-Control-Allow-Headers: Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 ini_set('default_charset', 'UTF-8');
 
-require "app_university_republic/model/Estudante.php";
-require "app_university_republic/estudante.service.php";
-require "app_university_republic/model/Funcionario.php";
-require "app_university_republic/funcionario.service.php";
-require "app_university_republic/conexao.php";
+require_once"app_university_republic/model/Estudante.php";
+require_once"app_university_republic/estudante.service.php";
+require_once"app_university_republic/model/Funcionario.php";
+require_once"app_university_republic/funcionario.service.php";
+require_once"app_university_republic/conexao.php";
 
 $action = $_POST['action'];
 
 if ($action === "cadastrarEstudante") {
 
-    $dados = json_decode($_POST['user']); 
+    //$dados = json_decode($_POST['user']); 
+    $dados = $_POST['user'];
+    $arrayParaReceberDadosDaString = [];
+    parse_str(htmlspecialchars_decode($dados), $arrayParaReceberDadosDaString);
+    $obj = json_decode(json_encode($arrayParaReceberDadosDaString));
 
     $conexao = new Conexao();
 
-    $estudante = new Estudante($dados, $conexao);
+    $estudante = new Estudante($obj, $conexao);
     $success = $estudante->salvarCadastro();
 
     if($success === true){
@@ -40,10 +44,10 @@ if ($action === "cadastrarEstudante") {
     $funcionario = new Funcionario($dados, $conexao);
     $success = $funcionario->salvarCadastro();
 
-    if($success){
+    if($success === true){
         echo json_encode(["sucesso" => 1, "mensagem" => "Funcionário cadastrado com sucesso!"]);
     } else {
-        echo json_encode(["sucesso" => 0, "mensagem" => "Falha ao cadastrar funcionário."]);
+        echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
     exit();

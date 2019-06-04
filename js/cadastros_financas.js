@@ -1,12 +1,18 @@
 /* global toastr */
 
+$('#cpf').mask('000.000.000-00', { reverse: true });
+$('#valorPagamento').mask('000.000.000.000.000,00', { reverse: true });
+$('#valorCompra').mask('000.000.000.000.000,00', { reverse: true });
+$('#codigoCompra').mask('00000000000');
+$('#quantidade').mask('00000000000');
+
 $(document).ready(function () {
 
     tabelaPagamentos = $('#tabelaConsultarPagamento').DataTable({
         "responsive": {
             "details": "false"
         },
-        "dom": 'Bfrtip',
+        "dom": 'Blfrtip',
         "buttons": [
             "excel", "pdf", "print"
         ],
@@ -37,11 +43,11 @@ $(document).ready(function () {
             }
         },
         "ajax": {
-           "url": "pagamento_controller.php",
+            "url": "financas_controller.php",
             "type": "POST",
             "data": {
                 "key": "sefortervalidacaooualgoassim",
-               "action": "consultarPagamentoTable"
+                "action": "consultarPagamentoTable"
             }
         }
     });
@@ -50,7 +56,7 @@ $(document).ready(function () {
         "responsive": {
             "details": "false"
         },
-        "dom": 'Bfrtip',
+        "dom": 'Blfrtip',
         "buttons": [
             "excel", "pdf", "print"
         ],
@@ -81,11 +87,11 @@ $(document).ready(function () {
             }
         },
         "ajax": {
-           "url": "despesa_controller.php",
+            "url": "financas_controller.php",
             "type": "POST",
             "data": {
                 "key": "sefortervalidacaooualgoassim",
-               "action": "consultarDespesaTable"
+                "action": "consultarDespesaTable"
             }
         }
     });
@@ -94,7 +100,7 @@ $(document).ready(function () {
         "responsive": {
             "details": "false"
         },
-        "dom": 'Bfrtip',
+        "dom": 'Bflrtip',
         "buttons": [
             "excel", "pdf", "print"
         ],
@@ -125,15 +131,15 @@ $(document).ready(function () {
             }
         },
         "ajax": {
-           "url": "saldo_controller.php",
+            "url": "financas_controller.php",
             "type": "POST",
             "data": {
                 "key": "sefortervalidacaooualgoassim",
-               "action": "consultarSaldoTable"
+                "action": "consultarSaldoTable"
             }
         }
     });
-    
+
     $('#tabPagamento').tabs({
         show: function (_event, ui) {
         }
@@ -182,8 +188,8 @@ function prepareFormDAta($form) {
     return JSON.stringify(indexed_array);
 }
 
-function salvar() {
-    var prepareData = prepareFormDAta($("#formCadastro"));
+function salvarPagamento() {
+    var prepareData = prepareFormDAta($("#formPagamento"));
 
     var dadosCadastraisObject = JSON.parse(prepareData);
 
@@ -193,15 +199,45 @@ function salvar() {
         url: '../app_university_republic/financas_controller.php',
         type: 'POST',
         data: {
-            action: $("#action").val(),
-            user: dadosCadastrais,
+            action: "cadastrarPagamento",
+            pagamento: dadosCadastrais,
             key: "segredo"
         },
         dataType: 'JSON',
         success: function (response) {
             if (response.sucesso === 1) {
                 toastr["success"](response.mensagem, "Sucesso!");
-                tabelaCursos.ajax.reload();
+                tabelaPagamentos.ajax.reload();
+            } else {
+                toastr["error"](response.mensagem, "Erro!");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+}
+
+function salvarDespesa() {
+    var prepareData = prepareFormDAta($("#formDespesa"));
+
+    var dadosCadastraisObject = JSON.parse(prepareData);
+
+    dadosCadastrais = JSON.stringify(dadosCadastraisObject);
+
+    $.ajax({
+        url: '../app_university_republic/financas_controller.php',
+        type: 'POST',
+        data: {
+            action: "cadastrarDespesa",
+            despesa: dadosCadastrais,
+            key: "segredo"
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.sucesso === 1) {
+                toastr["success"](response.mensagem, "Sucesso!");
+                tabelaDepesas.ajax.reload();
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }

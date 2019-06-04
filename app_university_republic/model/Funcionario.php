@@ -35,16 +35,16 @@ class Funcionario extends Pessoa
         $this->profissao = $profissao;
     }
 
-    public function excluirCadastro()
+    public function excluirCadastro($idUser)
     { }
 
     public function salvarCadastro()
     {
         try {
             $query = 'insert into tb_usuario (cpf, nome, rg, data_nascimento, sexo, estado_civil, tipo_usuario, email, senha, 
-                cep, endereco, numero, bairro, cidade, uf, complemento, celular)
+                cep, endereco, numero, bairro, cidade, uf, complemento, celular1, celular2)
                 values(:cpf, :nome, :rg, :dataNascimento, :sexo, :estadoCivil, :tipoUsuario, :email, :senha, 
-                :cep, :endereco, :numero, :bairro, :cidade, :uf, :complemento, :cel)';
+                :cep, :endereco, :numero, :bairro, :cidade, :uf, :complemento, :cel, :cel2)';
 
             $stmt = $this->conexao->prepare($query);
 
@@ -65,6 +65,7 @@ class Funcionario extends Pessoa
             $stmt->bindValue('uf', $this->getUf());
             $stmt->bindValue('complemento', $this->getComplemento());
             $stmt->bindValue('cel', $this->getCelularClean());
+            $stmt->bindValue('cel2', $this->getCelular2Clean());
 
             $result = $stmt->execute();
             $rows = $stmt->rowCount();
@@ -100,6 +101,8 @@ class Funcionario extends Pessoa
             $codigoErro = $e->getCode();
             if($codigoErro === "23000"){
                 return "CPF, RG ou email já cadastrado(s)";
+            } else {
+                return $e->getMessage();
             }
         }
     }

@@ -6,23 +6,24 @@ header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
 header("Access-Control-Allow-Headers: Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 ini_set('default_charset', 'UTF-8');
 
-require "app_university_republic/model/Curso.php";
-require "app_university_republic/curso.service.php";
-require "app_university_republic/conexao.php";
+require_once"app_university_republic/model/Curso.php";
+require_once"app_university_republic/curso.service.php";
+require_once"app_university_republic/conexao.php";
 
 $action = $_POST['action'];
 
+$conexao = new Conexao();
+$cursoService = new CursoService($conexao);
+
 if ($action === "cadastrarCurso") {
 
-    //$dados = json_decode($_POST['user']); 
+    $dados = json_decode($_POST['curso']); 
 
-    $sigla = $_POST['sigla'];
-    $curso = $_POST['curso'];
-    
-    $conexao = new Conexao();
+    $sigla = $dados->sigla;
+    $curso = $dados->curso;
 
-    $curso = new Curso($sigla, $curso, $conexao);
-    $success = $curso->salvarCadastro();
+    $curso = new Curso($sigla, $curso);
+    $success = $cursoService->salvarCadastro($curso);
 
     if($success === true){
         echo json_encode(["sucesso" => 1, "mensagem" => "Curso cadastrado com sucesso!"]);
@@ -36,8 +37,20 @@ if ($action === "cadastrarCurso") {
     print_r($cursoService);
     echo '</pre>';
      */
-    header('Location: curso.php?inclusao=1');
-} else {
+    //header('Location: curso.php?inclusao=1');
+} else if($action === "carregarCursos"){
+    $cursosBD = $cursoService->carregarCursosObject();
+    $cursos = [];
+    for($i= 0; $i<count($cursosBD); $i++){
+        $curso = new Curso($cursosBD[$i]->sigla, $cursosBD[$i]->nome_curso);
+        $curso->setId($cursosBD[$i]->id_curso);
+        array_push($cursos, $curso->getOwnProperties());
+        unset($curso);
+    }
+    echo json_encode(["sucesso" => 1, "cursos" => $cursos]);
+}
+
+else {
 
     $conexao = new Conexao();
     

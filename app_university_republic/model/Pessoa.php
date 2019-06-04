@@ -19,6 +19,7 @@ abstract class Pessoa {
     private $uf;
     private $complemento;
     private $celular;
+    private $celular2;
 
     function __construct($dados) {
         $this->setCpf($dados->cpf); 
@@ -38,6 +39,7 @@ abstract class Pessoa {
         $this->setUf($dados->uf);
         $this->setComplemento($dados->complemento);
         $this->setCelular($dados->celular);
+        $this->setCelular2($dados->celular2);
         
     }
 
@@ -109,16 +111,18 @@ abstract class Pessoa {
         return $this->celular;
     }
 
+    public function getCelular2() {
+        return $this->celular2;
+    }
+
     public function getCelularClean() {
-        $return = [];
-        $thisCelular = $this->getCelular();
-        if(is_array($thisCelular)){
-            foreach($thisCelular as $numeroCel){
-                $return[] = preg_replace('~\D~', '', $numeroCel);
-            }
-            //$return = $thisCelular;
-        }
-        return json_encode($return);
+        $thisCelular = preg_replace('~\D~', '', $this->getCelular());
+        return $thisCelular;
+    }
+
+    public function getCelular2Clean() {
+        $thisCelular = preg_replace('~\D~', '', $this->getCelular2());
+        return $thisCelular;
     }
 
     public function setCpf($cpf) {
@@ -188,6 +192,10 @@ abstract class Pessoa {
     public function setCelular($celular) {
         $this->celular = $celular;
     }
+
+    public function setCelular2($celular) {
+        $this->celular2 = $celular;
+    }
     
     function cpfValido(){
         $cpf = preg_replace('/[^0-9]/is', '', $cpf);
@@ -214,7 +222,7 @@ abstract class Pessoa {
 
     abstract function salvarCadastro();
 
-    abstract function excluirCadastro();
+    abstract function excluirCadastro($idUser);
     
     abstract function validarDados();
 }

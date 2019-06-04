@@ -1,6 +1,12 @@
 /* global toastr */
 
 $(document).ready(function () {
+    $(".standardSelect").chosen({
+        disable_search_threshold: 10,
+        no_results_text: "Sem resultados para:",
+        width: "100%"
+    });
+    carregarCursos();
     $("#areaEstudante").hide();
     $("#areaFuncionario").hide();
     $('#cpf').mask('000.000.000-00', { reverse: true });
@@ -16,7 +22,7 @@ $(document).ready(function () {
         "responsive": {
             "details": "false"
         },
-        "dom": 'Bfrtip',
+        "dom": 'Blfrtip',
         "buttons": [
             "excel", "pdf", "print"
         ],
@@ -60,7 +66,7 @@ $(document).ready(function () {
         "responsive": {
             "details": "false"
         },
-        "dom": 'Bfrtip',
+        "dom": 'Blfrtip',
         "buttons": [
             "excel", "pdf", "print"
         ],
@@ -128,7 +134,6 @@ $(document).ready(function () {
 
 });
 
-
 function changeType() {
     var type = $("#tipoUsuario option:selected").val();
     if (type === "1") {
@@ -170,16 +175,8 @@ function prepareFormDAta($form) {
 }
 
 function salvar() {
-    var prepareData = prepareFormDAta($("#formCadastro"));
 
-    var dadosCadastraisObject = JSON.parse(prepareData);
-
-    dadosCadastraisObject.celular = [];
-    dadosCadastraisObject.celular[0] = dadosCadastraisObject.celular1;
-    dadosCadastraisObject.celular[1] = dadosCadastraisObject.celular2;
-    dadosCadastraisObject.celular[2] = dadosCadastraisObject.telefoneResidencial;
-
-    dadosCadastrais = JSON.stringify(dadosCadastraisObject);
+    dadosCadastrais = $("#formCadastro").serialize();
 
     $.ajax({
         url: '../app_university_republic/estudante_controller.php',
@@ -227,5 +224,33 @@ function excluirCadastro(id) {
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
         }
+    });
+}
+
+function carregarCursos() {
+    $.ajax({
+        url: '../app_university_republic/curso_controller.php',
+        type: 'POST',
+        data: {
+            action: "carregarCursos",
+            key: "segredo"
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.sucesso === 1) {
+                var cursos = response.cursos;
+                for (var i = 0; i < cursos.length; i++) {
+                    var option = '<option value="'+cursos[i].id+'">'+ cursos[i].sigla+' - '+cursos[i].curso+'</option>';
+                    $("#curso").append(option);
+                    $("#curso").trigger('chosen:updated');
+                }
+            } else {
+                alert("poxa, deu errado :c");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+
     });
 }

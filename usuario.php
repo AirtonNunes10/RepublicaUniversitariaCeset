@@ -15,13 +15,9 @@
 	<script src="js/toastr.min.js"></script>
 	<script src="js/cadastros_usuarios.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
-	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
+	<script src="js/chosen.jquery.js"></script>
  
-	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
 	<script src="js/buttons.html5.min.js"></script>
 	<script src="js/buttons.print.min.js"></script>
@@ -29,6 +25,12 @@
 	<script src="js/jszip.min.js"></script>
 	<script src="js/pdfmake.min.js"></script>
 	<script src="js/vfs_fonts.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="DataTables/dataTables.css"/>
+	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
+	<link rel="stylesheet" type="text/css" href="css/chosen.css">
 
 	<title>Cesert</title>
 
@@ -65,7 +67,7 @@
 		<div class="tab-content">
 			<!-- DADOS PESSOAIS -->
 			<div role="tabpanel" class="tab-pane active" id="cadastrarUsuario">
-				<form class="center-from" method="post" id="formCadastro"action="estudante_controller.php">
+				<form class="center-from" method="post" id="formCadastro">
 				<h5 class="featurette-heading"><span class="text-muted">Dados pessoais</span></h5>
 				<div class="row col-md-12">
 
@@ -94,7 +96,7 @@
 					<div class="form-group col-sm-4">
 						<label for="sexo">Sexo</label>
 						<select name="sexo" required ng-model="sexo" class="form-control">
-							<option>[Selecione]</option>
+							<option value="">Selecione</option>
 							<option value="F">Femino</option>
 							<option value="M">Masculino</option>
 						</select>
@@ -102,7 +104,7 @@
 					<div class="form-group col-sm-4">
 						<label for="estadoCivil">Estado civil</label>
 						<select name="estadoCivil" required ng-model="estadoCivil" class="form-control">
-							<option>[Selecione]</option>
+							<option value="">Selecione</option>
 							<option>Solteiro</option>
 							<option>Casado</option>
 							<option>Divorciado</option>
@@ -113,7 +115,7 @@
 						<label for="tipoUsuario">Tipo de usuário</label>
 						<select name="tipoUsuario" id="tipoUsuario" required ng-model="tipoUsuario" class="form-control"
 							onchange="changeType()">
-							<option>[Selecione]</option>
+							<option value="">Selecione</option>
 							<option value="1">Administrador</option>
 							<option value="2">Estudante</option>
 							<option value="3">Funcionario</option>
@@ -165,7 +167,7 @@
 					<div class="form-group col-sm-4">
 						<label for="uf">UF</label>
 						<select name="uf" required ng-model="uf" class="form-control">
-							<option>[Selecione]</option>
+							<option value="">Selecione</option>
 							<option>AC</option>
 							<option>AL</option>
 							<option>AP</option>
@@ -209,18 +211,13 @@
 					<h5 class="featurette-heading"><span class="text-muted">Telefones para contato</span></h5>
 					<div class="form-group col-sm-4">
 						<label for="celular1">Celular 1</label>
-						<input name="celular1" type="numeric" required ng-model="celular1" class="form-control" 
+						<input name="celular" type="numeric" required ng-model="celular1" class="form-control" 
 							id="celular1" placeholder="(00)00000-0000">
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="celular2">Celular 2</label>
 						<input name="celular2" type="numeric" ng-model="celular2" class="form-control" 
 							id="celular2" placeholder="(00)00000-0000">
-					</div>
-					<div class="form-group col-sm-4">
-						<label for="telefoneResidencial">Telefone Residencial</label>
-						<input name="telefoneResidencial" type="numeric" ng-model="telefoneResidencial" class="form-control"
-							id="telefoneResidencial" placeholder="(00)0000-0000">
 					</div>
 				</div>
 
@@ -261,8 +258,9 @@
 						</div>
 						<div class="form-group col-sm-4">
 							<label for="curso">Curso</label>
-							<input name="curso" type="text" ng-model="curso" class="form-control" id="curso"
-								placeholder="Curso">
+							<select data-placeholder="Selecione" class="standardSelect" tabindex="1" multiple name="curso[]" id="curso" class="form-control">
+								<option value="">Selecione</option>
+							</select>
 						</div>
 						<div class="form-group col-sm-4">
 							<label for="dataInicioCurso">Data de início do curso</label>
@@ -282,7 +280,7 @@
 						<div class="form-group col-sm-4">
 							<label for="escolaridade">Nível escolaridade</label>
 							<select name="escolaridade" class="form-control">
-								<option>[Selecione]</option>
+								<option value="">Selecione</option>
 								<option>Fundamental</option>
 								<option>Médio</option>
 								<option>Superior</option>
@@ -297,7 +295,7 @@
 					<br>
 					<div class="center-button" style="text-align: center;">
 						<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-                                                <button ng-disabled="!cpf" type="button" onclick="salvar()" class="btn btn-primary">Salvar</button>
+                        <button ng-disabled="!cpf" type="button" onclick="salvar()" class="btn btn-primary">Salvar</button>
 					</div>
 					<br>
 				</div>
