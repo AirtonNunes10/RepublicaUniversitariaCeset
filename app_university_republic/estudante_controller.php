@@ -7,11 +7,11 @@ header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
 header("Access-Control-Allow-Headers: Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 ini_set('default_charset', 'UTF-8');
 
-require_once"app_university_republic/model/Estudante.php";
-require_once"app_university_republic/estudante.service.php";
-require_once"app_university_republic/model/Funcionario.php";
-require_once"app_university_republic/funcionario.service.php";
-require_once"app_university_republic/conexao.php";
+require_once "app_university_republic/model/Estudante.php";
+require_once "app_university_republic/estudante.service.php";
+require_once "app_university_republic/model/Funcionario.php";
+require_once "app_university_republic/funcionario.service.php";
+require_once "app_university_republic/conexao.php";
 
 $action = $_POST['action'];
 
@@ -28,7 +28,7 @@ if ($action === "cadastrarEstudante") {
     $estudante = new Estudante($obj, $conexao);
     $success = $estudante->salvarCadastro();
 
-    if($success === true){
+    if ($success === true) {
         echo json_encode(["sucesso" => 1, "mensagem" => "Estudante cadastrado com sucesso!"]);
     } else {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
@@ -37,26 +37,28 @@ if ($action === "cadastrarEstudante") {
     exit();
 } else if ($action === "cadastrarFuncionario") {
 
-    $dados = json_decode($_POST['user']); 
+    //$dados = json_decode($_POST['user']); 
+    $dados = $_POST['user'];
+    $arrayParaReceberDadosDaString = [];
+    parse_str(htmlspecialchars_decode($dados), $arrayParaReceberDadosDaString);
+    $obj = json_decode(json_encode($arrayParaReceberDadosDaString));
 
     $conexao = new Conexao();
 
-    $funcionario = new Funcionario($dados, $conexao);
+    $funcionario = new Funcionario($obj, $conexao);
     $success = $funcionario->salvarCadastro();
 
-    if($success === true){
+    if ($success === true) {
         echo json_encode(["sucesso" => 1, "mensagem" => "Funcionário cadastrado com sucesso!"]);
     } else {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
     exit();
-
-
 } else if ($action === "consultarEstudantesTable") {
 
     $conexao = new Conexao();
-    
+
     $estudanteService = new EstudanteService($conexao);
     $estudanteService->consultarCadastroEstudante();
     unset($estudanteService);
@@ -64,17 +66,92 @@ if ($action === "cadastrarEstudante") {
 } else if ($action === "consultarFuncionariosTable") {
 
     $conexao = new Conexao();
-    
+
     $funcionarioService = new FuncionarioService($conexao);
     $funcionarioService->consultarCadastroFuncionario();
     unset($funcionarioService);
-    
-} else if ($action === "excluirUsuario"){
-    
+
+} else if ($action === "carregarUsuarioEstudante") {
+
+    $conexao = new Conexao();
+
+    $id = $_POST['userID'];
+    $estudanteService = new EstudanteService($conexao);
+    $estudanteService->consultarEstudante($id);
+    unset($estudanteService);
+
+} else if ($action === "carregarUsuarioFuncionario") {
+
+    $conexao = new Conexao();
+
+    $id = $_POST['userID'];
+    $funcionarioService = new FuncionarioService($conexao);
+    $funcionarioService->consultarFuncionario($id);
+    unset($funcionarioService);
+
+} else if ($action === "excluirUsuario") {
+
     $conexao = new Conexao();
 
     $id = $_POST['userID'];
     $estudanteService = new EstudanteService($conexao);
     $estudanteService->excluirCadastro($id);
     unset($estudanteService);
+
+} else if ($action === "atualizarEstudante") {
+
+    $dados = $_POST['user'];
+    $arrayParaReceberDadosDaString = [];
+    parse_str(htmlspecialchars_decode($dados), $arrayParaReceberDadosDaString);
+    $obj = json_decode(json_encode($arrayParaReceberDadosDaString));
+
+    $conexao = new Conexao();
+    $estudanteReference = json_decode(json_encode($_POST['reference']));
+
+    $estudante = new Estudante($obj, $conexao);
+    $estudante->setIdEstudante($estudanteReference->idEstudante);
+    $estudante->setIdUsuario($estudanteReference->idUsuario);
+    $success = $estudante->atualizarCadastro();
+
+    if ($success === true) {
+        echo json_encode(["sucesso" => 1, "mensagem" => "Estudante atualizado com sucesso!"]);
+    } else {
+        echo json_encode(["sucesso" => 0, "mensagem" => $success]);
+    }
+
+    exit();
+} else if ($action === "atualizarFuncionario") {
+
+    $dados = $_POST['user'];
+    $arrayParaReceberDadosDaString = [];
+    parse_str(htmlspecialchars_decode($dados), $arrayParaReceberDadosDaString);
+    $obj = json_decode(json_encode($arrayParaReceberDadosDaString));
+
+    $conexao = new Conexao();
+    $funcionarioReference = json_decode(json_encode($_POST['reference']));
+
+    $funcionario = new Funcionario($obj, $conexao);
+    $funcionario->setIdFuncionario($funcionarioReference->idFuncionario);
+    $funcionario->setIdUsuario($funcionarioReference->idUsuario);
+    $success = $funcionario->atualizarCadastro();
+
+    if ($success === true) {
+        echo json_encode(["sucesso" => 1, "mensagem" => "Funcionario atualizado com sucesso!"]);
+    } else {
+        echo json_encode(["sucesso" => 0, "mensagem" => $success]);
+    }
+
+    exit();
+} else if ($action === "locarEstudante") {
+
+    $conexao = new Conexao();
+
+    $id = $_POST['userID'];
+
+} else if ($action === "consultarLocacoesTable") {
+
+    $conexao = new Conexao();
+
+    $id = $_POST['userID'];
+
 }

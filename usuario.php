@@ -49,12 +49,6 @@
 
 	<br>
 
-	<?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == 1) { ?>
-	<div class="alert alert-success" role="alert" style="text-align: center;">
-		<h3 size="100">Cadastro realizado com sucesso!<h3>
-	</div>
-	<?php } ?>
-
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
@@ -257,9 +251,13 @@
 								id="matricula" placeholder="Matricula">
 						</div>
 						<div class="form-group col-sm-4">
-							<label for="curso">Curso</label>
-							<select data-placeholder="Selecione" class="standardSelect" tabindex="1" multiple name="curso[]" id="curso" class="form-control">
+							<label for="escolaridade">Nível escolaridade</label>
+							<select name="escolaridade" class="form-control">
 								<option value="">Selecione</option>
+								<option>Fundamental</option>
+								<option>Médio</option>
+								<option>Superior</option>
+								<option>Técnico</option>
 							</select>
 						</div>
 						<div class="form-group col-sm-4">
@@ -278,13 +276,9 @@
 								id="periodo" placeholder="Periódo atual">
 						</div>
 						<div class="form-group col-sm-4">
-							<label for="escolaridade">Nível escolaridade</label>
-							<select name="escolaridade" class="form-control">
+							<label for="curso">Curso</label>
+							<select data-placeholder="Selecione" class="standardSelect" tabindex="1" multiple name="curso[]" id="curso" class="form-control">
 								<option value="">Selecione</option>
-								<option>Fundamental</option>
-								<option>Médio</option>
-								<option>Superior</option>
-								<option>Técnico</option>
 							</select>
 						</div>
 					</div>
@@ -353,5 +347,9 @@
 	<!-- Colocado no final do documento para que as páginas sejam carregadas mais rapidamente -->
 	<script src="js/bootstrap.min.js"></script>
 </body>
+
+<?php
+	include_once __DIR__."../../app_university_republic/modalEditarUsuario.php";
+?>
 
 </html>

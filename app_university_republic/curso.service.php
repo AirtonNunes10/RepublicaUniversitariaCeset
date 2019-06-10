@@ -47,7 +47,7 @@ class CursoService
                 $tempArray[$i][] = $result[$i]->sigla;
                 $tempArray[$i][] = $result[$i]->nome_curso;
                 $tempArray[$i][] =  '<div style="text-align:center">'
-                    . '<a href="#" class="input-group" onclick="editarCadastro(\'' . $result[$i]->id_curso . '\')"><i class="fa fa-trash"></i></a></div>';
+                    . '<a href="#" class="input-group" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-edit"></i></a>&nbsp';
                 array_push($data, $tempArray[$i]);
             }
         }

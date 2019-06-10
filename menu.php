@@ -15,10 +15,11 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sistema <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="usuario.php">Usuário</a></li>
             <li><a href="curso.php">Curso</a></li>
-            <li><a href="financas.php">Finanças</a></li>
             <li><a href="enviarEmail.php">Enviar email</a></li>
+            <li><a href="financas.php">Finanças</a></li>
+            <li><a href="locacaoEstudante.php">Locar Estudante</a></li>
+            <li><a href="usuario.php">Usuário</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Sites Informativos</li>
             <li><a href="http://www.casadoestudantepe.org.br/" title="Site da Casa do estudante de Pernambuco" target="_blank">CEP</a></li>

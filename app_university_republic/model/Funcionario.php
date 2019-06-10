@@ -1,11 +1,16 @@
 <?php
 
+require_once __DIR__ . '/Pessoa.php';
+require_once __DIR__ . '/../funcionario.service.php';
+
 class Funcionario extends Pessoa
 {
 
     private $departamento;
     private $profissao;
     private $conexao;
+	private $auxService;
+	private $idFuncionario;
 
     public function __construct($dados, $conexao)
     {
@@ -13,7 +18,18 @@ class Funcionario extends Pessoa
         $this->conexao = $conexao->conectar();
         $this->setDepartamento($dados->departamento);
         $this->setProfissao($dados->profissao);
+		$this->auxService = new FuncionarioService($conexao);
     }
+
+    function getIdFuncionario()
+	{
+		return $this->idFuncionario;
+	}
+
+	function setIdFuncionario($idFuncionario)
+	{
+		$this->idFuncionario = $idFuncionario;
+	}
 
     function getDepartamento()
     {
@@ -36,7 +52,9 @@ class Funcionario extends Pessoa
     }
 
     public function excluirCadastro($idUser)
-    { }
+	{
+		$this->auxService->excluirCadastro($idUser);
+	}
 
     public function salvarCadastro()
     {
@@ -79,7 +97,7 @@ class Funcionario extends Pessoa
                     //var_dump($stmt->errorInfo());
                     $idUsuario = $resultado->id_usuario;
 
-                    $query = 'insert into tb_funcionario(departamento, profissao, id_usuario)
+                    $query = 'insert into tb_funcionario(departamento, profissao, fk_funcionario_usuario)
                     values(:departamento, :profissao, :iduser)';
 
                     $query = $this->conexao->prepare($query);
@@ -106,6 +124,91 @@ class Funcionario extends Pessoa
             }
         }
     }
+
+    public function atualizarCadastro()
+	{
+		try {
+			$senha = $this->getSenha();
+			if (!empty($senha)) {
+				$query = 'UPDATE tb_usuario SET cpf=:cpf, nome=:nome, rg=:rg, data_nascimento=:dataNascimento, '
+					. 'sexo=:sexo, estado_civil=:estadoCivil, tipo_usuario=:tipoUsuario, email=:email, senha=:senha, '
+					. 'cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, cidade=:cidade, '
+					. 'uf=:uf, complemento=:complemento, celular1=:cel, celular2=:cel2 WHERE id_usuario=:iduser';
+
+
+				$stmt = $this->conexao->prepare($query);
+				$stmt->bindValue('senha', $this->getSenha());
+			} else {
+				$query = 'UPDATE tb_usuario SET cpf=:cpf, nome=:nome, rg=:rg, data_nascimento=:dataNascimento, '
+					. 'sexo=:sexo, estado_civil=:estadoCivil, tipo_usuario=:tipoUsuario, email=:email, '
+					. 'cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, cidade=:cidade, '
+					. 'uf=:uf, complemento=:complemento, celular1=:cel, celular2=:cel2 WHERE id_usuario=:iduser';
+
+
+				$stmt = $this->conexao->prepare($query);
+			}
+
+
+			$stmt->bindValue('cpf', preg_replace('~\D~', '', $this->getCpf()));
+			$stmt->bindValue('nome', $this->getNome());
+			$stmt->bindValue('rg', preg_replace('~\D~', '', $this->getRg()));
+			$stmt->bindValue('dataNascimento', $this->getDataNascimento());
+			$stmt->bindValue('sexo', $this->getSexo());
+			$stmt->bindValue('estadoCivil', $this->getEstadoCivil());
+			$stmt->bindValue('tipoUsuario', $this->getTipoUsuario());
+			$stmt->bindValue('email', $this->getEmail());
+			$stmt->bindValue('cep', preg_replace('~\D~', '', $this->getCep()));
+			$stmt->bindValue('endereco', $this->getEndereco());
+			$stmt->bindValue('numero', $this->getNumero());
+			$stmt->bindValue('bairro',  $this->getBairro());
+			$stmt->bindValue('cidade', $this->getCidade());
+			$stmt->bindValue('uf', $this->getUf());
+			$stmt->bindValue('complemento', $this->getComplemento());
+			$stmt->bindValue('cel', $this->getCelularClean());
+			$stmt->bindValue('cel2', $this->getCelular2Clean());
+			$stmt->bindValue('iduser', $this->getIdUsuario());
+
+			$stmt->execute();
+
+			try {
+
+				$idUsuario = $this->getIdUsuario();
+
+				$query = 'UPDATE tb_funcionario SET departamento=:departamento, profissao=:profissao WHERE fk_funcionario_usuario = :iduser';
+				$query = $this->conexao->prepare($query);
+				$query->bindValue('departamento', $this->getDepartamento());
+				$query->bindValue('profissao', $this->getProfissao());
+				$query->bindValue('iduser', $idUsuario);
+
+                $result = $query->execute();
+                
+                return true;
+				
+			} catch (PDOException $e) {
+				return $e->getMessage();
+			}
+			
+		} catch (PDOException $e) {
+			$codigoErro = $e->getCode();
+			if ($codigoErro === "23000") {
+				return "CPF, RG ou email já cadastrado(s)";
+			} else {
+				return $e->getMessage();
+			}
+		}
+    }
+    
+    public function getOwnProperties()
+	{
+		$thisVars = get_object_vars($this);
+		$parentVars = parent::getProperties();
+		$selfVars = array_merge_recursive($parentVars, $thisVars);
+		$return = [];
+		foreach ($selfVars as $currentKey => $currentVal) {
+			$return[$currentKey] = $currentVal;
+		}
+		return $return;
+	}
 
     public function validarDados()
     { // Valida os dados preenchidos se são vazios ou nulos

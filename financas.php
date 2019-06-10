@@ -15,13 +15,9 @@
 	<script src="js/toastr.min.js"></script>
 	<script src="js/cadastros_financas.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+	<script src="js/chosen.jquery.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
-	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
- 
-	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
 	<script src="js/buttons.html5.min.js"></script>
 	<script src="js/buttons.print.min.js"></script>
@@ -29,6 +25,12 @@
 	<script src="js/jszip.min.js"></script>
 	<script src="js/pdfmake.min.js"></script>
 	<script src="js/vfs_fonts.js"></script>
+ 
+	<link rel="stylesheet" type="text/css" href="css/fa/css/all.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="DataTables/dataTables.css"/>
+	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
+	<link rel="stylesheet" type="text/css" href="css/chosen.css">
 
 	<title>Cesert</title>
 
