@@ -66,7 +66,7 @@ header('Content-Type: text/html; charset=utf-8');
 					$tempArray[$i][] = $result[$i]->profissao;
 					$tempArray[$i][] = $result[$i]->data_cadastro;
 					$tempArray[$i][] = '<div style="text-align:center">'
-						. '<a href="#" class="input-group" data-toggle="modal" data-target="#modalEditarUsuario" onclick="carregarUsuarioFuncionario(\'' . $result[$i]->id_usuario . '\')"><i class="fa fa-edit"></i></a>&nbsp'
+						. '<a href="#" class="input-group" data-toggle="modal" data-target="#modalEditarUsuario" onclick="carregarUsuario(\'' . $result[$i]->id_usuario . '\', \''. $result[$i]->tipo_usuario .'\')"><i class="fa fa-edit"></i></a>&nbsp'
 						. '<a href="#" class="input-group" onclick="excluirCadastro(\'' . $result[$i]->id_usuario . '\')"><i class="fa fa-trash"></i></a></div>';
 					array_push($data, $tempArray[$i]);
 				}

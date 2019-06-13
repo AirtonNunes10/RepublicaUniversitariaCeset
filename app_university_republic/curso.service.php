@@ -57,7 +57,6 @@ class CursoService
 
     public function carregarCursosObject()
     {
-        //melhor dar um nome decente pra essas funçoes dps
         $query = "SELECT * FROM tb_curso";
         $query = $this->conexao->query($query);
         $result = $query->fetchAll(PDO::FETCH_OBJ);

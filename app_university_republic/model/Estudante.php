@@ -20,7 +20,11 @@ class Estudante extends Pessoa
 	{
 		parent::__construct($dados);
 		$this->conexao = $conexao->conectar();
-		$this->setCurso($dados->curso);
+		if (isset($dados->curso)) {
+			$this->setCurso($dados->curso);
+		} else {
+			$this->setCurso([]);
+		}
 		$this->setDataFinalCurso($dados->dataFinalCurso);
 		$this->setDataInicioCurso($dados->dataInicioCurso);
 		$this->setEscolaridade($dados->escolaridade);
@@ -29,7 +33,6 @@ class Estudante extends Pessoa
 		$this->setInstituicao($dados->instituicao);
 		$this->auxService = new EstudanteService($conexao);
 	}
-
 
 	function getIdEstudante()
 	{
@@ -114,7 +117,12 @@ class Estudante extends Pessoa
 
 	public function excluirCadastro($idUser)
 	{
-		$this->auxService->excluirCadastro($idUser);
+		$query = "DELETE FROM tb_usuario WHERE tb_usuario.id_usuario = " . $idUser;
+		$query = $this->conexao->query($query);
+		if ($query) {
+			return true;
+		}
+		return false;
 	}
 
 	public function salvarCadastro()
@@ -173,6 +181,9 @@ class Estudante extends Pessoa
 						$cursos = $this->getCurso();
 						$sucesso = false;
 						for ($i = 0; $i < count($cursos); $i++) {
+							if(empty($cursos[$i])){
+								continue;
+							}
 							if ($rows > 0) {
 								$getIdEstudante = 'SELECT id_estudante FROM tb_estudante WHERE fk_estudante_usuario = ' . $idUsuario;
 								$get = $this->conexao->query($getIdEstudante);
@@ -280,41 +291,47 @@ class Estudante extends Pessoa
 				$query->bindValue('iduser', $idUsuario);
 
 				$result = $query->execute();
+				$sucesso = true;
+				$checkCursos = $this->getCurso();
+				if (is_array($checkCursos)) {
+					if (count($checkCursos) > 0) {
 
+						$stmt = $this->conexao->prepare("DELETE FROM `tb_estudante_curso` WHERE `fk_estudante_curso`=:idEstudante");
+						$stmt->bindParam('idEstudante', $idEstudante, PDO::PARAM_INT);
+						$stmt->execute();
+						$rows = $stmt->rowCount();
 
-				$stmt = $this->conexao->prepare("DELETE FROM `tb_estudante_curso` WHERE `fk_estudante_curso`=:idEstudante");
-				$stmt->bindParam('idEstudante', $idEstudante, PDO::PARAM_INT);
-				$stmt->execute();
-				$rows = $stmt->rowCount();
-
-				$cursos = $this->getCurso();
-				$sucesso = false;
-				for ($i = 0; $i < count($cursos); $i++) {
-
-					$query = 'insert into tb_estudante_curso(fk_estudante_curso, fk_curso_estudante, '
-						. 'data_inicio_curso, data_final_curso, periodo, matricula, instituicao) '
-						. 'values(:idEst, :idCurso,  :dataInicioCurso, :dataFinalCurso, :periodo, :matricula, :instituicao)';
-
-					$query = $this->conexao->prepare($query);
-
-					$query->bindValue('instituicao', $this->getInstituicao());
-					$query->bindValue('matricula', $this->getMatricula());
-					$query->bindValue('idCurso', $cursos[$i]);
-					$query->bindValue('dataInicioCurso', $this->getDataInicioCurso());
-					$query->bindValue('dataFinalCurso', $this->getDataFinalCurso());
-					$query->bindValue('periodo', $this->getPeriodo());
-					$query->bindParam('idEst', $idEstudante, PDO::PARAM_INT);
-
-					$result = $query->execute();
-
-					$rows = $query->rowCount();
-					if ($rows > 0) {
-						$sucesso = true;
-					} else {
+						$cursos = $this->getCurso();
 						$sucesso = false;
-						break;
+						for ($i = 0; $i < count($cursos); $i++) {
+
+							$query = 'insert into tb_estudante_curso(fk_estudante_curso, fk_curso_estudante, '
+								. 'data_inicio_curso, data_final_curso, periodo, matricula, instituicao) '
+								. 'values(:idEst, :idCurso,  :dataInicioCurso, :dataFinalCurso, :periodo, :matricula, :instituicao)';
+
+							$query = $this->conexao->prepare($query);
+
+							$query->bindValue('instituicao', $this->getInstituicao());
+							$query->bindValue('matricula', $this->getMatricula());
+							$query->bindValue('idCurso', $cursos[$i]);
+							$query->bindValue('dataInicioCurso', $this->getDataInicioCurso());
+							$query->bindValue('dataFinalCurso', $this->getDataFinalCurso());
+							$query->bindValue('periodo', $this->getPeriodo());
+							$query->bindParam('idEst', $idEstudante, PDO::PARAM_INT);
+
+							$result = $query->execute();
+
+							$rows = $query->rowCount();
+							if ($rows > 0) {
+								$sucesso = true;
+							} else {
+								$sucesso = false;
+								break;
+							}
+						}
 					}
 				}
+
 				return $sucesso;
 			} catch (PDOException $e) {
 				return $e->getMessage();

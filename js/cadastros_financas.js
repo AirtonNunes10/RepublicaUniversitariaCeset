@@ -178,6 +178,7 @@ $(document).ready(function () {
 });
 
 function prepareFormDAta($form) {
+
     var unindexed_array = $form.serializeArray();
     var indexed_array = {};
 
@@ -189,6 +190,7 @@ function prepareFormDAta($form) {
 }
 
 function salvarPagamento() {
+
     var prepareData = prepareFormDAta($("#formPagamento"));
 
     var dadosCadastraisObject = JSON.parse(prepareData);
@@ -208,6 +210,7 @@ function salvarPagamento() {
             if (response.sucesso === 1) {
                 toastr["success"](response.mensagem, "Sucesso!");
                 tabelaPagamentos.ajax.reload();
+                $("#formPagamento").trigger("reset");
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }
@@ -238,6 +241,7 @@ function salvarDespesa() {
             if (response.sucesso === 1) {
                 toastr["success"](response.mensagem, "Sucesso!");
                 tabelaDepesas.ajax.reload();
+                $("#formDespesa").trigger("reset");
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }

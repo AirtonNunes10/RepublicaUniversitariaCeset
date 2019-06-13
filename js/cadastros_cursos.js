@@ -73,6 +73,7 @@ function prepareFormDAta($form) {
 }
 
 function salvarCurso() {
+
     var prepareData = prepareFormDAta($("#cursoForm"));
 
     var dadosCadastraisObject = JSON.parse(prepareData);
@@ -92,6 +93,7 @@ function salvarCurso() {
             if (response.sucesso === 1) {
                 toastr["success"](response.mensagem, "Sucesso!");
                 tabelaCursos.ajax.reload();
+                $("#cursoForm").trigger("reset");
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }

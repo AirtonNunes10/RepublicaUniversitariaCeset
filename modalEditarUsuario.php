@@ -215,8 +215,8 @@
                         <div class="row ">
                             <div class="form-group col-sm-4">
                                 <label for="Editcurso">Curso</label>
-                                <select data-placeholder="Selecione" class="standardSelect" tabindex="1" multiple name="curso[]" id="Editcurso" class="form-control">
-                                    <option value="">Selecione</option>
+                                <select data-placeholder="Selecione" required class="standardSelect form-control" tabindex="1" multiple name="curso[]" id="Editcurso" class="form-control">
+                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>

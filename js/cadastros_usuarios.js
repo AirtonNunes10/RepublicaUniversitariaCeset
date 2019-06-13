@@ -4,11 +4,14 @@ var globalUser = {};
 
 $(document).ready(function () {
     $(".standardSelect").chosen({
-        disable_search_threshold: 10,
+        disable_search_threshold: 2,
         no_results_text: "Sem resultados para:",
         width: "100%"
     });
+
     carregarCursos();
+    carregarEstudantesObject();
+
     $("#areaEstudante").hide();
     $("#areaFuncionario").hide();
     $('#cpf').mask('000.000.000-00', { reverse: true });
@@ -157,7 +160,15 @@ $(document).ready(function () {
         show: function (_event, ui) {
         }
     });
+    $('#tabLocarEstudante').tabs({
+        show: function (_event, ui) {
+        }
+    });
     $('#tabConsultarUsuario').tabs({
+        activate: function (e, ui) {
+        }
+    });
+    $('#tabConsultarLocacao').tabs({
         activate: function (e, ui) {
         }
     });
@@ -175,6 +186,11 @@ $(document).ready(function () {
     $('#consultarFuncionario').tabs({
         activate: function (e, ui) {
             tabelaFuncionarios.ajax.reload();
+        }
+    });
+    $('#consultarLocacao').tabs({
+        activate: function (e, ui) {
+            tabelaLocacoes.ajax.reload();
         }
     });
 
@@ -238,6 +254,8 @@ function salvar() {
                 toastr["success"](response.mensagem, "Sucesso!");
                 tabelaEstudantes.ajax.reload();
                 tabelaFuncionarios.ajax.reload();
+                $("#formCadastro").trigger("reset");
+                $("#curso").val('').trigger('chosen:updated');
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }
@@ -248,13 +266,19 @@ function salvar() {
     });
 }
 
-function carregarUsuarioEstudante(idUsuario) {
+$(document).on('hide.bs.modal','#modalEditarUsuario', function () {
+    $("#EditformCadastro").trigger("reset");
+    console.log('Form resetado ao fechar modal');
+});
+
+function carregarUsuario(idUsuario, tipoUsuario) {
     $.ajax({
         url: '../app_university_republic/estudante_controller.php',
         type: 'POST',
         data: {
-            action: "carregarUsuarioEstudante",
+            action: "carregarUsuario",
             userID: idUsuario,
+            tipoUsuario: tipoUsuario,
             key: "segredo"
         },
         dataType: 'JSON',
@@ -263,6 +287,7 @@ function carregarUsuarioEstudante(idUsuario) {
                 if (response.estudante) {
                     globalUser = response.estudante;
                     $("#EditareaFuncionario").hide();
+                    $("#EditareaEstudante").show();
                     var dados = response.estudante;
                     var cursos = dados.curso;
                     var cursosArray = [];
@@ -285,7 +310,6 @@ function carregarUsuarioEstudante(idUsuario) {
                     $("#EdittipoUsuario").val(dados.tipoUsuario);
                     $("#Editsexo").val(dados.sexo);
                     $("#Editemail").val(dados.email);
-                    //$("#Editsenha").val();
                     $("#Editcep").val(dados.cep);
                     $("#Editendereco").val(dados.endereco);
                     $("#Editnumero").val(dados.numero);
@@ -296,31 +320,11 @@ function carregarUsuarioEstudante(idUsuario) {
                     $("#Editcelular1").val(dados.celular);
                     $("#Editcelular2").val(dados.celular2);
                 }
-            } else {
-                alert("poxa, deu errado :c");
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
-        }
-    });
-}
 
-function carregarUsuarioFuncionario(idUsuario) {
-    $.ajax({
-        url: '../app_university_republic/estudante_controller.php',
-        type: 'POST',
-        data: {
-            action: "carregarUsuarioFuncionario",
-            userID: idUsuario,
-            key: "segredo"
-        },
-        dataType: 'JSON',
-        success: function (response) {
-            if (response.sucesso === 1) {
-                if (response.funcionario) {
+                else if (response.funcionario) {
                     globalUser = response.funcionario;
                     $("#EditareaEstudante").hide();
+                    $("#EditareaFuncionario").show();
                     var dados = response.funcionario;
 
                     $("#Editdepartamento").val(dados.departamento);
@@ -333,7 +337,6 @@ function carregarUsuarioFuncionario(idUsuario) {
                     $("#EdittipoUsuario").val(dados.tipoUsuario);
                     $("#Editsexo").val(dados.sexo);
                     $("#Editemail").val(dados.email);
-                    //$("#Editsenha").val();
                     $("#Editcep").val(dados.cep);
                     $("#Editendereco").val(dados.endereco);
                     $("#Editnumero").val(dados.numero);
@@ -343,7 +346,10 @@ function carregarUsuarioFuncionario(idUsuario) {
                     $("#Editcomplemento").val(dados.complemento);
                     $("#Editcelular1").val(dados.celular);
                     $("#Editcelular2").val(dados.celular2);
+                } else {
+                    toastr['error']('Retorno inesperado.', 'Erro!');
                 }
+
             } else {
                 alert("poxa, deu errado :c");
             }
@@ -354,15 +360,16 @@ function carregarUsuarioFuncionario(idUsuario) {
     });
 }
 
-function salvarEdicaoUsuario(){
+function salvarEdicaoUsuario() {
 
-    dadosCadastrais = $("#EditformCadastro").serialize();
     var action = "none";
-    if($("#EdittipoUsuario").val() === "1" || $("#EdittipoUsuario").val() === "2" || $("#EdittipoUsuario").val() === "4"){
-        action = "atualizarEstudante";
-    } else {
+    if ($("#EdittipoUsuario").val() === "3") {
         action = "atualizarFuncionario";
+    } else {
+        action = "atualizarEstudante";
     }
+    
+    dadosCadastrais = $("#EditformCadastro").serialize();
     $.ajax({
         url: '../app_university_republic/estudante_controller.php',
         type: 'POST',
@@ -375,9 +382,11 @@ function salvarEdicaoUsuario(){
         dataType: 'JSON',
         success: function (response) {
             if (response.sucesso === 1) {
-                toastr["success"](response.mensagem, "Sucesso!");
                 tabelaEstudantes.ajax.reload();
                 tabelaFuncionarios.ajax.reload();
+                $("#EditformCadastro").trigger("reset");
+                $('#modalEditarUsuario').modal('hide');
+                toastr["success"](response.mensagem, "Sucesso!");
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }
@@ -437,6 +446,7 @@ function carregarCursos() {
                     $("#curso").append(option);
                     $("#curso").trigger('chosen:updated');
                 }
+
                 for (var i = 0; i < cursos.length; i++) {
                     var option = '<option value="' + cursos[i].id + '">' + cursos[i].curso + '</option>';
                     $("#Editcurso").append(option);
@@ -444,6 +454,36 @@ function carregarCursos() {
                 }
             } else {
                 alert("poxa, deu errado :c");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+
+    });
+}
+
+function carregarEstudantesObject() {
+    $.ajax({
+        url: '../app_university_republic/estudante_controller.php',
+        type: 'POST',
+        data: {
+            action: "carregarEstudantesOBJ",
+            key: "segredo"
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.sucesso === 1) {
+                var estudantes = response.estudantes;
+                for (var i = 0; i < estudantes.length; i++) {
+                    var option = '<option value="' + estudantes[i].idEstudante + '">' + estudantes[i].nome + '</option>';
+                    $("#estudante").append(option);
+                    $("#estudante").trigger('chosen:updated');
+                }
+                
+            } else {
+                alert("poxa, deu errado :c");
+                console.log(response);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {

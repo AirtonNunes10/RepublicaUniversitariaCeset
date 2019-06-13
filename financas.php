@@ -17,6 +17,10 @@
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="js/chosen.jquery.js"></script>
 
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="js/bootstrap.min.js"></script>
+
 	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
 	<script src="js/buttons.html5.min.js"></script>
@@ -221,10 +225,6 @@
 		</div><!-- Nav tabs -->
 	</div>
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Colocado no final do documento para que as páginas sejam carregadas mais rapidamente -->
-	<script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

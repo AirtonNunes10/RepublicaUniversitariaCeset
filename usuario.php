@@ -16,7 +16,11 @@
 	<script src="js/cadastros_usuarios.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="js/chosen.jquery.js"></script>
- 
+	
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="js/bootstrap.min.js"></script>
+
 	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
 	<script src="js/buttons.html5.min.js"></script>
@@ -278,7 +282,7 @@
 						<div class="form-group col-sm-4">
 							<label for="curso">Curso</label>
 							<select data-placeholder="Selecione" class="standardSelect" tabindex="1" multiple name="curso[]" id="curso" class="form-control">
-								<option value="">Selecione</option>
+								<option value=""></option>
 							</select>
 						</div>
 					</div>
@@ -341,11 +345,7 @@
 			</div>
 		</div><!-- Nav tabs -->
 	</div>
-
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Colocado no final do documento para que as páginas sejam carregadas mais rapidamente -->
-	<script src="js/bootstrap.min.js"></script>
+	
 </body>
 
 <?php

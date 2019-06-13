@@ -31,14 +31,18 @@ if ($action === "cadastrarCurso") {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
-    //exit();
     /*
     echo '<pre>';
     print_r($cursoService);
     echo '</pre>';
      */
-    //header('Location: curso.php?inclusao=1');
+
+    //header('Location: curso.php');
+
+    exit();
+
 } else if($action === "carregarCursos"){
+
     $cursosBD = $cursoService->carregarCursosObject();
     $cursos = [];
     for($i= 0; $i<count($cursosBD); $i++){
@@ -47,6 +51,7 @@ if ($action === "cadastrarCurso") {
         array_push($cursos, $curso->getOwnProperties());
         unset($curso);
     }
+
     echo json_encode(["sucesso" => 1, "cursos" => $cursos]);
 }
 

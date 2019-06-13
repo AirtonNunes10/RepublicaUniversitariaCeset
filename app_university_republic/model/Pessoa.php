@@ -25,6 +25,10 @@ abstract class Pessoa
 
     function __construct($dados)
     {
+        if(!$this->cpfValido($dados->cpf)){
+            echo json_encode(["sucesso" => 0, "mensagem" => "CPF inválido!"]);
+            exit();
+        }
         $this->setCpf($dados->cpf);
         $this->setNome($dados->nome);
         $this->setRg($dados->rg);
@@ -32,6 +36,10 @@ abstract class Pessoa
         $this->setEstadoCivil($dados->estadoCivil);
         $this->setTipoUsuario($dados->tipoUsuario);
         $this->seTsexo($dados->sexo);
+        if(!$this->emailValido($dados->email)){
+            echo json_encode(["sucesso" => 0, "mensagem" => "EMAIL inválido!"]);
+            exit();
+        }
         $this->setEmail($dados->email);
         $this->setSenha($dados->senha);
         $this->setCep($dados->cep);
@@ -247,7 +255,7 @@ abstract class Pessoa
         $this->celular2 = $celular;
     }
 
-    function cpfValido()
+    function cpfValido($cpf)
     {
         $cpf = preg_replace('/[^0-9]/is', '', $cpf);
 
@@ -271,6 +279,15 @@ abstract class Pessoa
             }
         }
         return true;
+    }
+
+    function emailValido($email)
+    {
+        if (preg_match('/^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9_](?:[a-zA-Z0-9_\-](?!\.)){0,61}[a-zA-Z0-9_-]?\.)+[a-zA-Z0-9_](?:[a-zA-Z0-9_\-](?!$)){0,61}[a-zA-Z0-9_]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/', $email)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getProperties(){

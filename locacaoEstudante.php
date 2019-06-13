@@ -14,8 +14,13 @@
 	<script src="js/angular.min.js"></script>
 	<script src="js/toastr.min.js"></script>
 	<script src="js/cadastros_usuarios.js"></script>
+	<script src="js/quartos.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="js/chosen.jquery.js"></script>
+	
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -41,7 +46,6 @@
 	<link href="css/starter-template.css" rel="stylesheet">
 
 </head>
-
 
 <body>
 
@@ -102,7 +106,6 @@
 							<tr>
 								<th>Estudante</th>
 								<th>Quarto</th>
-								<th>Quantidade máxima</th>
 								<th>Opções</th>
 							</tr>
 						</thead>
@@ -112,10 +115,6 @@
 		</div><!-- Nav tabs -->
 	</div>
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Colocado no final do documento para que as páginas sejam carregadas mais rapidamente -->
-	<script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

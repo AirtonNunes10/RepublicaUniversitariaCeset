@@ -80,7 +80,6 @@
 		$mensagem->status['codigo_status'] = 2;
 	    $mensagem->status['descricao_status'] = 'Não foi possível enviar este e-mail! Por favor tente novamente mais tarde. Detalhes do erro: ' . $mail->ErrorInfo;
 
-	    //alguma lógica que armazene o erro para posterior análise por parte do programador
 	}
 ?>
 

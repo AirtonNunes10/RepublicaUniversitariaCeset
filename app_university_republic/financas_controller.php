@@ -35,9 +35,7 @@ if ($action === "cadastrarPagamento") {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
-    //exit();
-
-    //header('Location: financas.php');
+    exit();
     
 } else if ($action === "cadastrarDespesa") {
 
@@ -62,9 +60,7 @@ if ($action === "cadastrarPagamento") {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
-    //exit();
-
-    //header('Location: financas.php');
+    exit();
     
 } else if ($action === "consultarPagamentoTable") {
 
@@ -93,5 +89,4 @@ else if ($action === "consultarSaldoTable") {
     unset($financasService);
 
 }
-
 ?>
