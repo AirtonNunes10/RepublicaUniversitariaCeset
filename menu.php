@@ -26,8 +26,13 @@
             <li><a href="https://www.sertania.pe.gov.br/" title="Site da prefeitura de Sertânia" target="_blank">Sertânia</a></li>
           </ul>
         </li>
-        <li><a href="login.php">Sair</a></li>
+        <!--li><a class="nav-link" href="app_university_republic/logoff.php">Sair</a></li-->
       </ul>
-    </div><!--/.nav-collapse -->
+      <ul class="nav navbar-nav float-right pull-right">
+  <li class="float-right"><a class="nav-link" href="app_university_republic/logoff.php">Sair</a></li>
+    </ul>
+    </div>
+   
+  <!--/.nav-collapse -->
   </div>
 </nav>

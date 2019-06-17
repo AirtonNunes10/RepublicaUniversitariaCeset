@@ -1,7 +1,10 @@
 <?php
+
 //use ___PHPSTORM_HELPERS\object; //q?
 
 header('Content-Type: text/html; charset=utf-8');
+
+include_once __DIR__."/mascarar.php";
 require_once __DIR__ . '/model/Curso.php';
 
 class EstudanteService
@@ -111,16 +114,16 @@ class EstudanteService
 
 							//Array de Objetos
 							$tempData = $result[$i];
-							$tempData->dataFinalCurso = $result[$i]->data_final_curso;
+							$tempData->dataFinalCurso = date("d/m/Y", strtotime($result[$i]->data_final_curso));
 							unset($tempData->data_final_curso);
 
-							$tempData->dataInicioCurso = $result[$i]->data_inicio_curso;
+							$tempData->dataInicioCurso = date("d/m/Y", strtotime($result[$i]->data_inicio_curso));
 							unset($tempData->data_inicio_curso);
 
 							$tempData->celular = $result[$i]->celular1;
 							unset($tempData->celular1);
 
-							$tempData->dataNascimento = $result[$i]->data_nascimento;
+							$tempData->dataNascimento = date("d/m/Y", strtotime($result[$i]->data_nascimento));
 							unset($tempData->data_nascimento);
 
 							$tempData->estadoCivil = $result[$i]->estado_civil;
@@ -147,16 +150,16 @@ class EstudanteService
 
 						//ArrayObjects
 						$tempData = $result[$i];
-						$tempData->dataFinalCurso = $result[$i]->data_final_curso;
+						$tempData->dataFinalCurso = date("d/m/Y", strtotime($result[$i]->data_final_curso));
 						unset($tempData->data_final_curso);
 
-						$tempData->dataInicioCurso = $result[$i]->data_inicio_curso;
+						$tempData->dataInicioCurso = date("d/m/Y", strtotime($result[$i]->data_inicio_curso));
 						unset($tempData->data_inicio_curso);
 
 						$tempData->celular = $result[$i]->celular1;
 						unset($tempData->celular1);
 
-						$tempData->dataNascimento = $result[$i]->data_nascimento;
+						$tempData->dataNascimento = date("d/m/Y", strtotime($result[$i]->data_nascimento));
 						unset($tempData->data_nascimento);
 
 						$tempData->estadoCivil = $result[$i]->estado_civil;
@@ -183,14 +186,14 @@ class EstudanteService
 
 					continue;
 				}
-				$tempArray[$i][] = $result[$i]->cpf;
+				$tempArray[$i][] = mascarar($result[$i]->cpf, "###.###.###-##");
 				$tempArray[$i][] = $result[$i]->nome;
 				$tempArray[$i][] = $result[$i]->email;
 				$tempArray[$i][] = $result[$i]->instituicao;
 				$tempArray[$i][] = $result[$i]->nome_curso;
 				$tempArray[$i][] = $result[$i]->periodo;
-				$tempArray[$i][] = $result[$i]->data_inicio_curso;
-				$tempArray[$i][] = $result[$i]->data_final_curso;
+				$tempArray[$i][] = date("d/m/Y", strtotime($result[$i]->data_inicio_curso));
+				$tempArray[$i][] = date("d/m/Y", strtotime($result[$i]->data_final_curso));
 				$tempArray[$i][] =  '<div style="text-align:center">'
 					. '<a href="#" class="input-group" data-toggle="modal" data-target="#modalEditarUsuario" onclick="carregarUsuario(\'' . $result[$i]->id_usuario . '\', \'' . $result[$i]->tipo_usuario . '\')"><i class="fa fa-edit"></i></a>&nbsp'
 					. '<a href="#" class="input-group" onclick="excluirCadastro(\'' . $result[$i]->id_usuario . '\')"><i class="fa fa-trash"></i></a>'
@@ -212,10 +215,11 @@ class EstudanteService
 
 						//ArrayObjects
 						$tempData = $result[$i];
-						$tempData->dataFinalCurso = $result[$i]->data_final_curso;
+						$tempData->dataFinalCurso = date("d/m/Y", strtotime($result[$i]->data_final_curso));
 						unset($tempData->data_final_curso);
 
-						$tempData->dataInicioCurso = $result[$i]->data_inicio_curso;
+						$tempData->dataInicioCurso = date("d/m/Y", strtotime($result[$i]->data_inicio_curso));
+						//ja volto BLZ 
 						unset($tempData->data_inicio_curso);
 
 						$tempData->celular = $result[$i]->celular1;
@@ -249,16 +253,16 @@ class EstudanteService
 
 					//ArrayObjects
 					$tempData = $result[$i];
-					$tempData->dataFinalCurso = $result[$i]->data_final_curso;
+					$tempData->dataFinalCurso = date("d/m/Y", strtotime($result[$i]->data_final_curso));
 					unset($tempData->data_final_curso);
 
-					$tempData->dataInicioCurso = $result[$i]->data_inicio_curso;
+					$tempData->dataInicioCurso = date("d/m/Y", strtotime($result[$i]->data_inicio_curso));
 					unset($tempData->data_inicio_curso);
 
 					$tempData->celular = $result[$i]->celular1;
 					unset($tempData->celular1);
 
-					$tempData->dataNascimento = $result[$i]->data_nascimento;
+					$tempData->dataNascimento = date("d/m/Y", strtotime($result[$i]->data_nascimento));
 					unset($tempData->data_nascimento);
 
 					$tempData->estadoCivil = $result[$i]->estado_civil;

@@ -31,12 +31,6 @@ if ($action === "cadastrarCurso") {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
-    /*
-    echo '<pre>';
-    print_r($cursoService);
-    echo '</pre>';
-     */
-
     //header('Location: curso.php');
 
     exit();

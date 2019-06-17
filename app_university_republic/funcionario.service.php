@@ -1,5 +1,9 @@
 <?php 
+
 header('Content-Type: text/html; charset=utf-8');
+
+include_once __DIR__."/mascarar.php";
+
 	class FuncionarioService {
 
 		private $conexao;
@@ -59,12 +63,13 @@ header('Content-Type: text/html; charset=utf-8');
 			if ($result) {
 
 				for ($i = 0; $i < count($result); $i++) {
-					$tempArray[$i][] = $result[$i]->cpf;
+					$tempArray[$i][] = mascarar($result[$i]->cpf, "###.###.###-##");
 					$tempArray[$i][] = $result[$i]->nome;
 					$tempArray[$i][] = $result[$i]->email;
 					$tempArray[$i][] = $result[$i]->departamento;
 					$tempArray[$i][] = $result[$i]->profissao;
-					$tempArray[$i][] = $result[$i]->data_cadastro;
+					$tempArray[$i][] = date("d/m/Y H:i:s", strtotime($result[$i]->data_cadastro));
+					//$tempArray[$i][] = date("d/m/Y à\s H:i:s", strtotime($result[$i]->data_cadastro));
 					$tempArray[$i][] = '<div style="text-align:center">'
 						. '<a href="#" class="input-group" data-toggle="modal" data-target="#modalEditarUsuario" onclick="carregarUsuario(\'' . $result[$i]->id_usuario . '\', \''. $result[$i]->tipo_usuario .'\')"><i class="fa fa-edit"></i></a>&nbsp'
 						. '<a href="#" class="input-group" onclick="excluirCadastro(\'' . $result[$i]->id_usuario . '\')"><i class="fa fa-trash"></i></a></div>';
@@ -80,5 +85,3 @@ header('Content-Type: text/html; charset=utf-8');
 		}
 
 	}
-
-?>

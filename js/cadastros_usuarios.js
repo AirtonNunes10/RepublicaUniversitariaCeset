@@ -20,7 +20,6 @@ $(document).ready(function () {
     $('#numero').mask('0000');
     $('#celular1').mask('(00)00000-0000');
     $('#celular2').mask('(00)00000-0000');
-    $('#telefoneResidencial').mask('(00)0000-0000');
     $('#periodo').mask('00');
 
     tabelaEstudantes = $('#tabelaConsultarEstudante').DataTable({
@@ -302,23 +301,23 @@ function carregarUsuario(idUsuario, tipoUsuario) {
                     $("#Editmatricula").val(dados.matricula);
                     $("#Editperiodo").val(dados.periodo);
                     $("#Editinstituicao").val(dados.instituicao);
-                    $("#Editcpf").val(dados.cpf);
+                    $("#Editcpf").val(dados.cpf).mask('000.000.000-00', { reverse: true });
                     $("#Editnome").val(dados.nome);
-                    $("#Editrg").val(dados.rg);
+                    $("#Editrg").val(dados.rg).mask('0.000.000');
                     $("#EditdataNascimento").val(dados.dataNascimento);
                     $("#EditestadoCivil").val(dados.estadoCivil);
                     $("#EdittipoUsuario").val(dados.tipoUsuario);
                     $("#Editsexo").val(dados.sexo);
                     $("#Editemail").val(dados.email);
-                    $("#Editcep").val(dados.cep);
+                    $("#Editcep").val(dados.cep).mask('00000-000');
                     $("#Editendereco").val(dados.endereco);
-                    $("#Editnumero").val(dados.numero);
+                    $("#Editnumero").val(dados.numero).mask('0000');
                     $("#Editbairro").val(dados.bairro);
                     $("#Editcidade").val(dados.cidade);
                     $("#Edituf").val(dados.uf).trigger('chosen:updated');
                     $("#Editcomplemento").val(dados.complemento);
-                    $("#Editcelular1").val(dados.celular);
-                    $("#Editcelular2").val(dados.celular2);
+                    $("#Editcelular1").val(dados.celular).mask('(00)00000-0000');
+                    $("#Editcelular2").val(dados.celular2).mask('(00)00000-0000');
                 }
 
                 else if (response.funcionario) {
@@ -329,23 +328,23 @@ function carregarUsuario(idUsuario, tipoUsuario) {
 
                     $("#Editdepartamento").val(dados.departamento);
                     $("#Editprofissao").val(dados.profissao);
-                    $("#Editcpf").val(dados.cpf);
+                    $("#Editcpf").val(dados.cpf).mask('000.000.000-00');
                     $("#Editnome").val(dados.nome);
-                    $("#Editrg").val(dados.rg);
+                    $("#Editrg").val(dados.rg).mask('0.000.000');
                     $("#EditdataNascimento").val(dados.dataNascimento);
                     $("#EditestadoCivil").val(dados.estadoCivil);
                     $("#EdittipoUsuario").val(dados.tipoUsuario);
                     $("#Editsexo").val(dados.sexo);
                     $("#Editemail").val(dados.email);
-                    $("#Editcep").val(dados.cep);
+                    $("#Editcep").val(dados.cep).mask('00000-000');
                     $("#Editendereco").val(dados.endereco);
-                    $("#Editnumero").val(dados.numero);
+                    $("#Editnumero").val(dados.numero).mask('0000');
                     $("#Editbairro").val(dados.bairro);
                     $("#Editcidade").val(dados.cidade);
                     $("#Edituf").val(dados.uf).trigger('chosen:updated');
                     $("#Editcomplemento").val(dados.complemento);
-                    $("#Editcelular1").val(dados.celular);
-                    $("#Editcelular2").val(dados.celular2);
+                    $("#Editcelular1").val(dados.celular).mask('(00)00000-0000');
+                    $("#Editcelular2").val(dados.celular2).mask('(00)00000-0000');
                 } else {
                     toastr['error']('Retorno inesperado.', 'Erro!');
                 }
@@ -510,6 +509,10 @@ function salvarLocacao() {
             if (response.sucesso === 1) {
                 toastr["success"](response.mensagem, "Sucesso!");
                 tabelaLocacoes.ajax.reload();
+                $("#estudante").val("").trigger('chosen:updated');
+                $("#quarto").val("").trigger('chosen:updated');
+                carregarQuartos();
+                //window.location.reload();
             } else {
                 toastr["error"](response.mensagem, "Erro!");
             }

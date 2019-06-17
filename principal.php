@@ -1,3 +1,9 @@
+<?php
+
+include_once __DIR__."../app_university_republic/validador_acesso.php";
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en" ng-app>
   <head>

@@ -1,3 +1,9 @@
+<?php
+
+include_once __DIR__."../app_university_republic/validador_acesso.php";
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en" ng-app>
 
@@ -17,10 +23,6 @@
 	<script src="js/quartos.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="js/chosen.jquery.js"></script>
-	
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<script src="js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -57,56 +59,59 @@
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active" id="tabLocarEstudante"><a href="#locarEstudante" aria-controls="locarEstudante"
+			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+				<li role="presentation" class="active" id="tabLocarEstudante"><a href="#locarEstudante" aria-controls="locarEstudante"
 					role="tab" data-toggle="tab">Locar Estudante</a></li>
+			<? } ?>
 			<li role="presentation" id="tabConsultarLocacao"><a href="#consultarLocacao" aria-controls="consultarLocacao" role="tab"
 					data-toggle="tab">Consultar Locação</a></li>
 		</ul>
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<!-- DADOS DO CURSO -->
-			<div role="tabpanel" class="tab-pane active" id="locarEstudante">
-				<form class="center-from" method="post" id="fromLocacao">
-					<h5 class="featurette-heading"><span class="text-muted">Dados da Locação</span></h5>
-					<div class="row col-md-12">
+			<!-- DADOS LOCACAO -->
+			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+				<div role="tabpanel" class="tab-pane active" id="locarEstudante">
+					<form class="center-from" method="post" id="fromLocacao">
+						<h5 class="featurette-heading"><span class="text-muted">Dados da Locação</span></h5>
+						<div class="row col-md-12">
 
-					<input hidden id="action" name="action" value="none">
+						<input hidden id="action" name="action" value="none">
 
-						<div class="form-group col-sm-8">
-							<label for="estudante">Estudante</label>
-							<select name="estudante" id="estudante" class="standardSelect" tabindex="1" required ng-model="estudante" class="form-control">
-                                <option value="">Selecione</option>
-                            </select>
+							<div class="form-group col-sm-8">
+								<label for="estudante">Estudante</label>
+								<select data-placeholder="Selecione" name="estudante" id="estudante" class="standardSelect" tabindex="1" required ng-model="estudante" class="form-control">
+									<option value=""></option>
+								</select>
+							</div>
+							
+							<div class="form-group col-sm-4">
+								<label for="quarto">Quarto</label>
+								<select data-placeholder="Selecione" name="quarto" id="quarto" class="standardSelect" tabindex="1" required ng-model="quarto" class="form-control">
+									<option value=""></option>
+								</select>
+							</div>
 						</div>
-						
-						<div class="form-group col-sm-4">
-							<label for="quarto">Quarto</label>
-							<select name="quarto" id="quarto" class="standardSelect" tabindex="1" required ng-model="quarto" class="form-control">
-                                <option value="">Selecione</option>
-                            </select>
-						</div>
-					</div>
 
-					<div class="row col-md-12">
-						<div class="borda"></div>
-						<br>
-						<div class="center-button" style="text-align: center;">
-							<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-							<button ng-disabled="!estudante" onclick="salvarLocacao()" class="btn btn-primary">Salvar</button>
+						<div class="row col-md-12">
+							<div class="borda"></div>
+							<br>
+							<div class="center-button" style="text-align: center;">
+								<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
+								<button ng-disabled="!estudante" onclick="salvarLocacao()" class="btn btn-primary">Salvar</button>
+							</div>
+							<br>
 						</div>
-						<br>
-					</div>
-				</form>
-			</div>
+					</form>
+				</div>
+			<? } ?>
 
 			<div role="tabpanel" class="tab-pane" id="consultarLocacao">
 				<div class="tab-content">
 					<table cellpadding='1' cellspacing='1' id='tabelaConsultarLocacao' class="table table-striped table-bordered" width='100%'>
 						<thead>
 							<tr>
-								<th>Estudante</th>
 								<th>Quarto</th>
-								<th>Opções</th>
+								<th>Estudante</th>
 							</tr>
 						</thead>
 					</table>
@@ -114,6 +119,10 @@
 			</div>
 		</div><!-- Nav tabs -->
 	</div>
+	
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="js/bootstrap.min.js"></script>
 
 </body>
 

@@ -59,8 +59,6 @@ class QuartoService
             for ($i = 0; $i < count($result); $i++) {
                 $tempArray[$i][] = $result[$i]->nome_quarto;
                 $tempArray[$i][] = $result[$i]->nome;
-                $tempArray[$i][] =  '<div style="text-align:center">'
-                    . '<a href="#" class="input-group" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-edit"></i></a>&nbsp';
                 array_push($data, $tempArray[$i]);
             }
         }

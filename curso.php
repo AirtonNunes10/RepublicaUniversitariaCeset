@@ -1,3 +1,9 @@
+<?php
+
+include_once __DIR__."../app_university_republic/validador_acesso.php";
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en" ng-app>
 
@@ -16,10 +22,6 @@
 	<script src="js/cadastros_cursos.js"></script>
 	<script src="js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="js/chosen.jquery.js"></script>
-
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<script src="js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="DataTables/datatables.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -57,48 +59,53 @@
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active" id="tabCadastrarCurso"><a href="#cadastrarCurso" aria-controls="cadastrarCurso"
+			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+				<li role="presentation" class="active" id="tabCadastrarCurso"><a href="#cadastrarCurso" aria-controls="cadastrarCurso"
 					role="tab" data-toggle="tab">Cadastrar Curso</a></li>
+			<? } ?>
 			<li role="presentation" id="tabConsultarCurso"><a href="#consultarCurso" aria-controls="consultarCurso" role="tab"
 					data-toggle="tab">Consultar Cursos</a></li>
 		</ul>
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<!-- DADOS DO CURSO -->
-			<div role="tabpanel" class="tab-pane active" id="cadastrarCurso">
-				<form class="center-from" method="post" id="cursoForm">
-					<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
-					<div class="row col-md-12">
 
-					<input hidden id="action" name="action" value="none">
+			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+				<div role="tabpanel" class="tab-pane active" id="cadastrarCurso">
+					<form class="center-from" method="post" id="cursoForm">
+						<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
+						<div class="row col-md-12">
 
-						<div class="form-group col-sm-4">
-							<label for="codigo">Código</label>
-							<input name="codigo" type="numeric" readonly ng-model="codigo" class="form-control" id="codigo" placeholder="0000">
-						</div>
-						<div class="form-group col-sm-4">
-							<label for="sigla">Sigla do curso</label>
-							<input name="sigla" type="text" required ng-model="sigla" class="form-control" id="sigla"
-								placeholder="SI">
-						</div>
-						<div class="form-group col-sm-4">
-							<label for="curso">Nome do Curso</label>
-							<input name="curso" type="text" required ng-model="curso" class="form-control" id="curso"
-								placeholder="Sistemas de Informação">
-						</div>
-					</div>
+						<input hidden id="action" name="action" value="none">
 
-					<div class="row col-md-12">
-						<div class="borda"></div>
-						<br>
-						<div class="center-button" style="text-align: center;">
-							<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-							<button ng-disabled="!curso" onclick="salvarCurso()" class="btn btn-primary">Salvar</button>
+							<div class="form-group col-sm-4">
+								<label for="codigo">Código</label>
+								<input name="codigo" type="numeric" readonly ng-model="codigo" class="form-control" id="codigo" placeholder="0000">
+							</div>
+							<div class="form-group col-sm-4">
+								<label for="sigla">Sigla do curso</label>
+								<input name="sigla" type="text" required ng-model="sigla" class="form-control" id="sigla"
+									placeholder="SI">
+							</div>
+							<div class="form-group col-sm-4">
+								<label for="curso">Nome do Curso</label>
+								<input name="curso" type="text" required ng-model="curso" class="form-control" id="curso"
+									placeholder="Sistemas de Informação">
+							</div>
 						</div>
-						<br>
-					</div>
-				</form>
-			</div>
+
+						<div class="row col-md-12">
+							<div class="borda"></div>
+							<br>
+							<div class="center-button" style="text-align: center;">
+								<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
+								<button ng-disabled="!curso" onclick="salvarCurso()" class="btn btn-primary">Salvar</button>
+							</div>
+							<br>
+						</div>
+					</form>
+				</div>
+			<? } ?>
 
 			<div role="tabpanel" class="tab-pane" id="consultarCurso">
 				<div class="tab-content">
@@ -108,7 +115,9 @@
 								<th>Código</th>
 								<th>Sigla</th>
 								<th>Curso</th>
-								<th>Opções</th>
+								<? if($_SESSION['usuario_perfil'] == 1) { ?>
+									<th>Opções</th>
+								<? } ?>
 							</tr>
 						</thead>
 					</table>
@@ -116,6 +125,10 @@
 			</div>
 		</div><!-- Nav tabs -->
 	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="js/bootstrap.min.js"></script>
 
 </body>
 

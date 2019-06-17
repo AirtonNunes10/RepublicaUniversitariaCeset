@@ -15,6 +15,7 @@ function carregarQuartos(){
         dataType: 'JSON',
         success: function (response) {
             if (response.sucesso === 1) {
+                $("#quarto").empty().trigger('chosen:updated');
                 var quartos = response.quartos;
                 for (var i = 0; i < quartos.length; i++) {
                     var option = '<option value="' + quartos[i].id + '">' + quartos[i].nome + '</option>';

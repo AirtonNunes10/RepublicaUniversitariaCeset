@@ -65,6 +65,7 @@
         public function setValorCompra($valorCompra){
             $this->valorCompra = $valorCompra;
         }
+
     }
 
 ?>
