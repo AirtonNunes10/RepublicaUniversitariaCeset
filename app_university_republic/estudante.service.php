@@ -92,10 +92,7 @@ class EstudanteService
 			$previous = -78;
 			for ($i = 0; $i < count($result); $i++) {
 				if ($lastId === $result[$i]->id_usuario) {
-					//nao funcionava antes porque quando nao entrava no bloco la  embaixo e voltava pra ca
-					//com certeza entrava aqui, so que o $i tinha iterado e nao adiantava simplesmente inserir na posicao atual dele
-					//no "tempArray", ele serve apenas pra adicionar o curso do "result"... dai quando aumenta, acrescenta na posiçao
-					//gravada aqui:... e o push ocorre no mesmo, caso seja o ultimo do array "result"
+
 					$curso = new Curso($result[$i]->sigla,  $result[$i]->nome_curso);
 					$curso->setId($result[$i]->id_curso);
 					array_push($cursos, (object)$curso->getOwnProperties());
@@ -103,11 +100,8 @@ class EstudanteService
 
 					$tempArray[$previous][4] .= ", " . $result[$i]->nome_curso;
 					if (array_key_exists($i + 1, $result)) {
-						//aqui verifica se ha um proximo item no array.
+
 						if ($lastId !== $result[$i + 1]->id_usuario) {
-							// aqui verifica se o proximo item tem o mesmo id da pessoa que foi definido
-							//ali embaixo, se ha um proximo item e ele nao tem o mesmo id, cai aqui
-							//e ele e inserido
 
 							//datatables
 							array_push($data, $tempArray[$previous]);
@@ -144,7 +138,7 @@ class EstudanteService
 							$cursos = [];
 						}
 					} else {
-						//se este foi o ultimo item, ele tambem e inserido
+
 						//Datatables
 						array_push($data, $tempArray[$previous]);
 
@@ -180,10 +174,6 @@ class EstudanteService
 						$cursos = [];
 					}
 
-					//se caiu aqui, a parte de baixo nao deve ser executada e deve apenas 
-					//ir para a proxima iteraçao, onde os mesmos itens sao definidos e as mesmas checagens sao
-					//feitas
-
 					continue;
 				}
 				$tempArray[$i][] = mascarar($result[$i]->cpf, "###.###.###-##");
@@ -206,8 +196,7 @@ class EstudanteService
 
 				$lastId = $result[$i]->id_usuario;
 				$previous = $i;
-				//nesse trecho ocorrem as mesmas verificacoes la de cima
-				//em especial pra quem nao repete, ou seja, quem so tem 1 curso...
+				
 				if (array_key_exists($i + 1, $result)) {
 					if ($lastId !== $result[$i + 1]->id_usuario) {
 						//Datatables
