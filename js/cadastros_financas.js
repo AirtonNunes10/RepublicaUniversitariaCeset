@@ -27,6 +27,7 @@ $(document).ready(function () {
     trocaTipo();
 
     carregarEstudantesObject();
+    
     tabelaPagamentos = $('#tabelaConsultarPagamento').DataTable({
         "responsive": {
             "details": "false"
@@ -114,51 +115,7 @@ $(document).ready(function () {
             }
         }
     });
-    /*
-        tabelaSaldos = $('#tabelaConsultarSaldo').DataTable({
-            "responsive": {
-                "details": "false"
-            },
-            "dom": 'Bflrtip',
-            "buttons": [
-                "excel", "pdf", "print"
-            ],
-            "bAutoWidth": "false",
-            "lengthMenu": [[5, 10, 15, 20, 25], [5, 10, 15, 20, 25]],
-            "pageLength": 5,
-            "order": [[0, "asc"]],
-            "language": {
-                "sInfoEmpty": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_  Resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Procurar",
-                "oPaginate": {
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLast": "Último"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                }
-            },
-            "ajax": {
-                "url": "financas_controller.php",
-                "type": "POST",
-                "data": {
-                    "key": "sefortervalidacaooualgoassim",
-                    "action": "consultarSaldoTable"
-                }
-            }
-        });
-    */
+    
     $('#tabPagamento').tabs({
         show: function (_event, ui) {
         }
@@ -186,12 +143,7 @@ $(document).ready(function () {
     });
     $('#tabConsultarDespesa').tabs({
         activate: function (e, ui) {
-            tabelaDepesas.ajax.reload(null, false);
-        }
-    });
-    $('#tabConsultarSaldo').tabs({
-        activate: function (e, ui) {
-            tabelaSaldos.ajax.reload(null, false);
+            tabelaDespesas.ajax.reload(null, false);
         }
     });
 });
@@ -293,12 +245,12 @@ function putCPF() {
             return estudante;
         }
     });
-    // Onde ta mascarando o campo? DO VALOR? do cpf
     $("#cpf").val(estudante.cpf);
     $("#cpf").unmask().mask('000.000.000-00', { reverse: true });
 }
 
 function salvarDespesa() {
+    
     var prepareData = prepareFormDAta($("#formDespesa"));
 
     var dadosCadastraisObject = JSON.parse(prepareData);
@@ -317,7 +269,7 @@ function salvarDespesa() {
         success: function (response) {
             if (response.sucesso === 1) {
                 toastr["success"](response.mensagem, "Sucesso!");
-                tabelaDepesas.ajax.reload();
+                tabelaDespesas.ajax.reload();
                 $("#formDespesa").trigger("reset");
             } else {
                 toastr["error"](response.mensagem, "Erro!");

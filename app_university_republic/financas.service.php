@@ -1,6 +1,7 @@
 <?php
 
 include_once __DIR__."/mascarar.php";
+include_once __DIR__."/tipoPagamento.php";
 
 class FinancasService
 {
@@ -32,15 +33,14 @@ class FinancasService
                     $idUsuario = NULL;
                 }
             }
-            $query = 'insert into tb_pagamento (cpf, nome, tipo_pagamento, valor_pagamento, fk_pagamento_usuario)
-                    values(:cpf, :nome, :tipoPagamento, :valorPagamento, :fkPagamentoUsuario)';
+            $query = 'insert into tb_pagamento (cpf, tipo_pagamento, valor_pagamento, fk_pagamento_usuario)
+                    values(:cpf, :tipoPagamento, :valorPagamento, :fkPagamentoUsuario)';
 
             $stmt = $this->conexao->prepare($query);
 
             $valorPagamento =  str_replace(",", ".", $pagamento->getValorPagamento());
 
             $stmt->bindValue('cpf', preg_replace('~\D~', '', $pagamento->getCpf()));
-            $stmt->bindValue('nome', $pagamento->getNome());
             $stmt->bindValue('tipoPagamento', $pagamento->getTipoPagamento());
             $stmt->bindValue('valorPagamento', $valorPagamento);
             $stmt->bindValue('fkPagamentoUsuario', $idUsuario);
@@ -62,11 +62,8 @@ class FinancasService
         $valorCompra =  str_replace(",", ".", $despesa->getValorCompra());
 
         $valorQtdDespesa = $despesa->getQuantidade();
-        var_dump($valorQtdDespesa);
         $valorDespesa = $valorCompra;
-        var_dump($valorDespesa);
         $valorTotalCompra = $valorDespesa * $valorQtdDespesa;
-        var_dump($valorTotalCompra);
 
         try {
             $query = 'insert into tb_despesa (codigo_compra, descricao, quantidade, local_compra, data_compra, valor_compra, valor_total_compra)
@@ -95,7 +92,7 @@ class FinancasService
 
     public function consultarPagamento()
     {
-        $query = "select * from tb_pagamento";
+        $query = "SELECT tb_usuario.*, tb_pagamento.* FROM tb_usuario INNER JOIN tb_pagamento ON tb_usuario.id_usuario = tb_pagamento.fk_pagamento_usuario";
         $query = $this->conexao->query($query);
         $result = $query->fetchAll(PDO::FETCH_OBJ);
         $tempArray = [];
@@ -104,7 +101,7 @@ class FinancasService
                 $tempArray[$i][] = $result[$i]->id_pagamento;
                 $tempArray[$i][] = mascarar($result[$i]->cpf, "###.###.###-##");
                 $tempArray[$i][] = $result[$i]->nome;
-                $tempArray[$i][] = $result[$i]->tipo_pagamento;
+                $tempArray[$i][] = tipoPagamento($result[$i]->tipo_pagamento);
                 $tempArray[$i][] = date("d/m/Y H:i:s", strtotime($result[$i]->data_pagamento));
                 $tempArray[$i][] = "R$ ".$result[$i]->valor_pagamento;
             }
@@ -169,7 +166,7 @@ class FinancasService
             return $e->getMessage();
         }
         $financaInfo = new stdClass();
-        //como vai ser só exibição, ele pode ser formatado como string aqui
+        
         $financaInfo->valorTotalRecebido = "R$ ".number_format((float)$valorTotalRecebido, 2);
         $financaInfo->valorTotalDespesa = "R$ ".number_format((float) $valorTotalDespesa, 2);
         $financaInfo->valorTotalSaldo = "R$ ".round(((float)$valorTotalRecebido - (float)$valorTotalDespesa), 2);

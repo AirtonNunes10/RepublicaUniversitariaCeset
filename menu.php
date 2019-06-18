@@ -1,3 +1,9 @@
+<?php
+
+include_once __DIR__."../app_university_republic/validador_acesso.php";
+
+?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -16,7 +22,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sistema <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="curso.php">Curso</a></li>
-            <li><a href="enviarEmail.php">Enviar email</a></li>
+            <?php if($_SESSION['usuario_perfil'] == 1 || $_SESSION['usuario_perfil'] == 4) { ?>
+              <li><a href="enviarEmail.php">Enviar email</a></li>
+            <?php } ?>
             <li><a href="financas.php">Finanças</a></li>
             <li><a href="locacaoEstudante.php">Locar Estudante</a></li>
             <li><a href="usuario.php">Usuário</a></li>
@@ -29,8 +37,8 @@
         <!--li><a class="nav-link" href="app_university_republic/logoff.php">Sair</a></li-->
       </ul>
       <ul class="nav navbar-nav float-right pull-right">
-  <li class="float-right"><a class="nav-link" href="app_university_republic/logoff.php">Sair</a></li>
-    </ul>
+        <li class="float-right"><a class="nav-link" href="app_university_republic/logoff.php">Sair</a></li>
+      </ul>
     </div>
    
   <!--/.nav-collapse -->

@@ -71,68 +71,60 @@ include_once __DIR__ . "../app_university_republic/validador_acesso.php";
 					<li role="presentation" id="tabConsultarPagamento"><a href="#consultarPagamento" aria-controls="consultarPagamento" role="tab" data-toggle="tab">Consultar pagamentos</a></li>
 				</ul>
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="cadastrarPagamento">
-						<form class="center-from" method="post" id="formPagamento">
-							<h5 class="featurette-heading"><span class="text-muted">Dados pagamentos</span></h5>
+					<?php if($_SESSION['usuario_perfil'] == 4) { ?>
+						<div role="tabpanel" class="tab-pane active" id="cadastrarPagamento">
+							<form class="center-from" method="post" id="formPagamento">
+								<h5 class="featurette-heading"><span class="text-muted">Dados pagamentos</span></h5>
 
-							<!-- <input hidden id="action" name="action" value="cadastrarPagamento"> -->
+								<!-- <input hidden id="action" name="action" value="cadastrarPagamento"> -->
 
-
-
-
-
-							<div class="row col-md-12">
-								<div class="form-group col-sm-4">
-									<label for="tipoPagamento">Tipo pagamento</label>
-									<select name="tipoPagamento" placeholder="Selecione" id="tipoPagamento" onchange="trocaTipo()" required ng-model="tipoPagamento" class="form-control required">
-										<option value=""></option>
-										<option value="1">Doação</option>
-										<option value="2">Mensalidade</option>
-										<option value="3">Multa</option>
-									</select>
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="cpf">CPF</label>
-									<input name="cpf" type="text" required ng-model="cpf" class="form-control required" id="cpf" placeholder="000.000.000-00">
-								</div>
-								<div id="financainterna">
+								<div class="row col-md-12">
 									<div class="form-group col-sm-4">
-										<label for="estudante">Estudante</label>
-										<select data-placeholder="Selecione" onchange="putCPF()" name="estudante" id="estudante" class="standardSelect" tabindex="1" required ng-model="estudante" class="form-control required">
+										<label for="tipoPagamento">Tipo pagamento</label>
+										<select name="tipoPagamento" placeholder="Selecione" id="tipoPagamento" onchange="trocaTipo()" required ng-model="tipoPagamento" class="form-control required">
 											<option value=""></option>
+											<option value="1">Doação</option>
+											<option value="2">Mensalidade</option>
+											<option value="3">Multa</option>
 										</select>
 									</div>
-								</div>
-								<div id="doacao">
 									<div class="form-group col-sm-4">
-										<label for="nome">Nome completo</label>
-										<input name="nome" type="text" required ng-model="nome" class="form-control required" id="nome" placeholder="Nome completo">
+										<label for="cpf">CPF</label>
+										<input name="cpf" type="text" required ng-model="cpf" class="form-control required" id="cpf" placeholder="000.000.000-00">
+									</div>
+									<div id="financainterna">
+										<div class="form-group col-sm-4">
+											<label for="estudante">Estudante</label>
+											<select data-placeholder="Selecione" onchange="putCPF()" name="estudante" id="estudante" class="standardSelect" tabindex="1" required ng-model="estudante" class="form-control required">
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+									<div id="doacao">
+										<div class="form-group col-sm-4">
+											<label for="nome">Nome completo</label>
+											<input name="nome" type="text" required ng-model="nome" class="form-control required" id="nome" placeholder="Nome completo">
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="valorPagamento">Valor pagamento</label>
+										<input name="valorPagamento" type="numeric" required ng-model="valorPagamento" class="form-control required" id="valorPagamento" placeholder="00,00">
 									</div>
 								</div>
-								<div class="form-group col-sm-4">
-									<label for="valorPagamento">Valor pagamento</label>
-									<input name="valorPagamento" type="numeric" required ng-model="valorPagamento" class="form-control required" id="valorPagamento" placeholder="00,00">
+
+								<div class="row col-md-12">
+									<div class="borda"></div>
+									<br>
+									<div class="center-button" style="text-align: center;">
+										<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
+										<button onclick="salvarPagamento()" class="btn btn-primary">Salvar</button>
+									</div>
+									<br>
 								</div>
-							</div>
 
-							<div class="row col-md-12">
-								<div class="borda"></div>
-								<br>
-								<div class="center-button" style="text-align: center;">
-									<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-									<button onclick="salvarPagamento()" class="btn btn-primary">Salvar</button>
-								</div>
-								<br>
-							</div>
-
-
-
-
-
-
-
-						</form>
-					</div>
+							</form>
+						</div>
+					<?php } ?>
 					<div role="tabpanel" class="tab-pane" id="consultarPagamento">
 						<table cellpadding='1' cellspacing='1' id='tabelaConsultarPagamento' class="table table-striped table-bordered" width='100%'>
 							<thead>
@@ -157,46 +149,48 @@ include_once __DIR__ . "../app_university_republic/validador_acesso.php";
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="cadastrarDespesa">
-						<form class="center-from" method="post" id="formDespesa">
-							<h5 class="featurette-heading"><span class="text-muted">Dados despesas</span></h5>
-							<div class="row col-md-12">
-								<div class="form-group col-sm-4">
-									<label for="codigoCompra">Código da compra</label>
-									<input name="codigoCompra" type="numeric" ng-model="codigoCompra" class="form-control" id="codigoCompra" placeholder="000000">
+					<?php if($_SESSION['usuario_perfil'] == 4) { ?>
+						<div role="tabpanel" class="tab-pane active" id="cadastrarDespesa">
+							<form class="center-from" method="post" id="formDespesa">
+								<h5 class="featurette-heading"><span class="text-muted">Dados despesas</span></h5>
+								<div class="row col-md-12">
+									<div class="form-group col-sm-4">
+										<label for="codigoCompra">Código da compra</label>
+										<input name="codigoCompra" type="numeric" ng-model="codigoCompra" class="form-control" id="codigoCompra" placeholder="000000">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="descricao">Descrição</label>
+										<input name="descricao" type="text" required ng-model="descricao" class="form-control" id="descricao" placeholder="Internet">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="quantidade">Quantidade</label>
+										<input name="quantidade" type="numeric" required ng-model="quantidade" class="form-control" id="quantidade" placeholder="000000">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="localCompra">Local compra</label>
+										<input name="localCompra" type="text" required ng-model="localCompra" class="form-control" id="localCompra" placeholder="NET">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="dataCompra">Data compra</label>
+										<input name="dataCompra" type="date" required ng-model="dataCompra" class="form-control" id="dataCompra" placeholder="dd/mm/aaaa">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="valorCompra">Valor compra</label>
+										<input name="valorCompra" type="numeric" required ng-model="valorCompra" class="form-control" id="valorCompra" placeholder="00,00">
+									</div>
 								</div>
-								<div class="form-group col-sm-4">
-									<label for="descricao">Descrição</label>
-									<input name="descricao" type="text" required ng-model="descricao" class="form-control" id="descricao" placeholder="Internet">
+								<div class="row col-md-12">
+									<div class="borda"></div>
+									<br>
+									<div class="center-button" style="text-align: center;">
+										<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
+										<button onclick="salvarDespesa()" class="btn btn-primary">Salvar</button>
+									</div>
+									<br>
 								</div>
-								<div class="form-group col-sm-4">
-									<label for="quantidade">Quantidade</label>
-									<input name="quantidade" type="numeric" required ng-model="quantidade" class="form-control" id="quantidade" placeholder="000000">
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="localCompra">Local compra</label>
-									<input name="localCompra" type="text" required ng-model="localCompra" class="form-control" id="localCompra" placeholder="NET">
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="dataCompra">Data compra</label>
-									<input name="dataCompra" type="date" required ng-model="dataCompra" class="form-control" id="dataCompra" placeholder="dd/mm/aaaa">
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="valorCompra">Valor compra</label>
-									<input name="valorCompra" type="numeric" required ng-model="valorCompra" class="form-control" id="valorCompra" placeholder="00,00">
-								</div>
-							</div>
-							<div class="row col-md-12">
-								<div class="borda"></div>
-								<br>
-								<div class="center-button" style="text-align: center;">
-									<button type="reset" ng-click="limparCampos()" class="btn btn-default">Limpar</button>
-									<button ng-disabled="!valorCompra" onclick="salvarDespesa()" class="btn btn-primary">Salvar</button>
-								</div>
-								<br>
-							</div>
-						</form>
-					</div>
+							</form>
+						</div>
+					<?php } ?>
 
 					<div role="tabpanel" class="tab-pane" id="consultarDespesa">
 						<table cellpadding='1' cellspacing='1' id='tabelaConsultarDespesa' class="table table-striped table-bordered" width='100%'>

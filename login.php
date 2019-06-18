@@ -45,29 +45,29 @@
                 <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
               </div>
 
-              <? if (isset($_GET['login']) && $_GET['login'] == 'erro') { ?>
+              <?php if (isset($_GET['login']) && $_GET['login'] == 'erro') { ?>
 
                 <div class="text-danger">
                   Usuário ou senha inválido(s).
                 </div>
 
-              <? } ?>
+              <?php } ?>
 
-              <? if (isset($_GET['login']) && $_GET['login'] == 'erro2') { ?>
+              <?php if (isset($_GET['login']) && $_GET['login'] == 'erro2') { ?>
 
                 <div class="text-danger">
                   Faça login antes de acessar as páginas protegidas.
                 </div>
 
-              <? } ?>
+              <?php } ?>
 
-              <? if (isset($_GET['login']) && $_GET['login'] == 'erro3') { ?>
+              <?php if (isset($_GET['login']) && $_GET['login'] == 'erro3') { ?>
 
                 <div class="text-danger">
-                  Acesso restrito aos funcionários.
+                  Acesso restrito aos estudantes.
                 </div>
 
-              <? } ?>
+              <?php } ?>
 
               <div align="center">
                 <a href="index.php"><button type="button" class="btn btn-warning">Voltar</button></a>

@@ -219,7 +219,6 @@ class EstudanteService
 						unset($tempData->data_final_curso);
 
 						$tempData->dataInicioCurso = date("d/m/Y", strtotime($result[$i]->data_inicio_curso));
-						//ja volto BLZ 
 						unset($tempData->data_inicio_curso);
 
 						$tempData->celular = $result[$i]->celular1;

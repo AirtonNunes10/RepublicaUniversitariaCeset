@@ -31,8 +31,6 @@ if ($action === "cadastrarCurso") {
         echo json_encode(["sucesso" => 0, "mensagem" => $success]);
     }
 
-    //header('Location: curso.php');
-
     exit();
 
 } else if($action === "carregarCursos"){

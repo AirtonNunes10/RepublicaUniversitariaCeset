@@ -1,7 +1,7 @@
 <?php
 
 include_once __DIR__."../app_university_republic/validador_acesso.php";
-  
+
 ?>
 
 <!DOCTYPE html>
@@ -59,10 +59,10 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
-			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+			<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 				<li role="presentation" class="active" id="tabCadastrarCurso"><a href="#cadastrarCurso" aria-controls="cadastrarCurso"
 					role="tab" data-toggle="tab">Cadastrar Curso</a></li>
-			<? } ?>
+			<?php } ?>
 			<li role="presentation" id="tabConsultarCurso"><a href="#consultarCurso" aria-controls="consultarCurso" role="tab"
 					data-toggle="tab">Consultar Cursos</a></li>
 		</ul>
@@ -70,7 +70,7 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 		<div class="tab-content">
 			<!-- DADOS DO CURSO -->
 
-			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+			<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 				<div role="tabpanel" class="tab-pane active" id="cadastrarCurso">
 					<form class="center-from" method="post" id="cursoForm">
 						<h5 class="featurette-heading"><span class="text-muted">Dados do Curso</span></h5>
@@ -105,7 +105,7 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 						</div>
 					</form>
 				</div>
-			<? } ?>
+			<?php } ?>
 
 			<div role="tabpanel" class="tab-pane" id="consultarCurso">
 				<div class="tab-content">
@@ -115,9 +115,9 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 								<th>Código</th>
 								<th>Sigla</th>
 								<th>Curso</th>
-								<? if($_SESSION['usuario_perfil'] == 1) { ?>
+								<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 									<th>Opções</th>
-								<? } ?>
+								<?php } ?>
 							</tr>
 						</thead>
 					</table>

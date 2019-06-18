@@ -37,6 +37,7 @@ if ($action === "cadastrarPagamento") {
     }
 
     exit();
+    
 } else if ($action === "cadastrarDespesa") {
 
     $dados = json_decode($_POST['despesa']);

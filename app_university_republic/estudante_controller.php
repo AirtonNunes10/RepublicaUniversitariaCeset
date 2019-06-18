@@ -21,7 +21,6 @@ $action = $_POST['action'];
 
 if ($action === "cadastrarEstudante") {
 
-    //$dados = json_decode($_POST['user']); 
     $dados = $_POST['user'];
     $arrayParaReceberDadosDaString = [];
     parse_str(htmlspecialchars_decode($dados), $arrayParaReceberDadosDaString);
@@ -42,7 +41,6 @@ if ($action === "cadastrarEstudante") {
 
 } else if ($action === "cadastrarFuncionario") {
 
-    //$dados = json_decode($_POST['user']); 
     $dados = $_POST['user'];
     $arrayParaReceberDadosDaString = [];
     parse_str(htmlspecialchars_decode($dados), $arrayParaReceberDadosDaString);

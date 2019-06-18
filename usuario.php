@@ -1,7 +1,7 @@
 <?php
 
 include_once __DIR__."../app_university_republic/validador_acesso.php";
-  
+
 ?>
 
 <!DOCTYPE html>
@@ -58,17 +58,17 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 	<div class="container">
 		<!-- Nav tabs -->			
 		<ul class="nav nav-tabs" role="tablist">
-			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+			<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 				<li role="presentation" class="active" id="tabCadastrarUsuario"><a href="#cadastrarUsuario" aria-controls="cadastrarUsuario"
 					role="tab" data-toggle="tab">Cadastrar usuários</a></li>
-			<? } ?>
+			<?php } ?>
 			<li role="presentation" id="tabConsultarUsuario"><a href="#consultarUsuario" aria-controls="consultarUsuario" role="tab"
 					data-toggle="tab">Consultar usuários</a></li>
 		</ul>
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<!-- DADOS PESSOAIS -->
-			<? if($_SESSION['usuario_perfil'] == 1) { ?>
+			<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 				<div role="tabpanel" class="tab-pane active" id="cadastrarUsuario">
 					<form class="center-from" method="post" id="formCadastro">
 					<h5 class="featurette-heading"><span class="text-muted">Dados pessoais</span></h5>
@@ -304,7 +304,7 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 					</div>
 					</form>
 				</div>
-			<? } ?>
+			<?php } ?>
 
 			<div role="tabpanel" class="tab-pane" id="consultarUsuario">
 				<ul class="nav nav-tabs" role="tablist">
@@ -327,9 +327,9 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 									<th>Perído Atual</th>
 									<th>Data Inicio Curso</th>
 									<th>Data Final Curso</th>
-									<? if($_SESSION['usuario_perfil'] == 1) { ?>
+									<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 										<th>Opções</th>
-									<? } ?>
+									<?php } ?>
 								</tr>
 							</thead>
 						</table>
@@ -344,9 +344,9 @@ include_once __DIR__."../app_university_republic/validador_acesso.php";
 									<th>Departamento</th>
 									<th>Profissão</th>
 									<th>Data Cadastro</th>
-									<? if($_SESSION['usuario_perfil'] == 1) { ?>
+									<?php if($_SESSION['usuario_perfil'] == 1) { ?>
 										<th>Opções</th>
-									<? } ?>
+									<?php } ?>
 								</tr>
 							</thead>
 						</table>

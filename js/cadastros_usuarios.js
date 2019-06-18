@@ -328,7 +328,7 @@ function carregarUsuario(idUsuario, tipoUsuario) {
 
                     $("#Editdepartamento").val(dados.departamento);
                     $("#Editprofissao").val(dados.profissao);
-                    $("#Editcpf").val(dados.cpf).mask('000.000.000-00');
+                    $("#Editcpf").val(dados.cpf).mask('000.000.000-00'), { reverse: true };
                     $("#Editnome").val(dados.nome);
                     $("#Editrg").val(dados.rg).mask('0.000.000');
                     $("#EditdataNascimento").val(dados.dataNascimento);
